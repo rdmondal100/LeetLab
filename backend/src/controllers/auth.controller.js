@@ -6,7 +6,7 @@ import { ApiError } from '../utils/api-error.js';
 import { ApiResponse } from '../utils/api-response.js';
 
 
-export const register = async (req, res) => {
+export const register = async (req, res,next) => {
     const { email, password, name } = req.body;
     try {
         const existingUser = await db.user.findUnique({
@@ -16,7 +16,7 @@ export const register = async (req, res) => {
         })
 
         if (existingUser) {
-            throw new ApiError(400, "User already exists")
+            throw new ApiError(409, "User already exists")
         }
 
         const hashedPassword = await bcrypt.hash(password, 10)
@@ -51,9 +51,7 @@ export const register = async (req, res) => {
 
     } catch (error) {
         console.log("Error creating user::", error)
-        res.status(500).json({
-            error: "Error creating user"
-        })
+        next(error)
     }
 }
 export const login = async (req, res) => {
