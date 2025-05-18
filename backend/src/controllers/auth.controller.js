@@ -2,6 +2,8 @@ import bcrypt from 'bcryptjs'
 import { db } from '../libs/db.js';
 import jwt from 'jsonwebtoken'
 import { UserRole } from '../generated/prisma/index.js';
+import { ApiError } from '../utils/api-error.js';
+import { ApiResponse } from '../utils/api-response.js';
 
 
 export const register = async (req, res) => {
@@ -14,9 +16,7 @@ export const register = async (req, res) => {
         })
 
         if (existingUser) {
-            return res.status(400).json({
-                error: "User already exists"
-            })
+            throw new ApiError(400, "User already exists")
         }
 
         const hashedPassword = await bcrypt.hash(password, 10)
@@ -31,26 +31,26 @@ export const register = async (req, res) => {
 
         const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, { expiresIn: "7d" })
 
-        res.cookie("jwt",token,{
-            httpOnly:true,
+        res.cookie("jwt", token, {
+            httpOnly: true,
             sameSite: "strict",
             secure: process.env.NODE_env !== "development",
             maxAge: 1000 * 60 * 60 * 24 * 7
         })
 
-        res.status(201).json({
-            message: "User created successfully",
-            user:{
-                id: newUser.id,
-                email: newUser.email,
-                name: newUser.name,
-                role: newUser.role,
-                image:newUser.image
-            }
-        })
+        const response = new ApiResponse(201, {
+            id: newUser.id,
+            email: newUser.email,
+            name: newUser.name,
+            role: newUser.role,
+            image: newUser.image
+        }, "User created successfully",
+        )
+
+        res.status(201).json(response)
 
     } catch (error) {
-        console.log("Error creating user::",error)
+        console.log("Error creating user::", error)
         res.status(500).json({
             error: "Error creating user"
         })
