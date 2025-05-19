@@ -4,6 +4,9 @@ import jwt from 'jsonwebtoken'
 import { UserRole } from '../generated/prisma/index.js';
 import { ApiError } from '../utils/api-error.js';
 import { ApiResponse } from '../utils/api-response.js';
+import { asyncHandler } from '../utils/async-handler.js';
+
+
 
 
 export const register = asyncHandler(async (req, res) => {
@@ -30,12 +33,13 @@ export const register = asyncHandler(async (req, res) => {
 
     const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, { expiresIn: "7d" })
 
-    res.cookie("jwt", token, {
+
+    const options = {
         httpOnly: true,
         sameSite: "strict",
         secure: process.env.NODE_ENV !== "development",
         maxAge: 1000 * 60 * 60 * 24 * 7
-    })
+    }
 
     const response = new ApiResponse(201, {
         id: newUser.id,
@@ -46,7 +50,10 @@ export const register = asyncHandler(async (req, res) => {
     }, "User created successfully",
     )
 
-    res.status(response.statusCode).json(response)
+    return res
+    .status(response.statusCode)
+    .cookie("jwt", token, options)
+    .json(response)
 
 
 })
