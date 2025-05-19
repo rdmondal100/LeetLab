@@ -1,0 +1,39 @@
+import { body } from "express-validator";
+import { UserRole } from "../generated/prisma/index.js";
+
+const userRegisterValidator = () => {
+    return [
+        body("email")
+            .trim()
+            .notEmpty()
+            .withMessage("Email is required")
+            .isEmail()
+            .withMessage("Email is invalid"),
+        body("password")
+            .trim()
+            .notEmpty()
+            .withMessage("Password is required")
+            .isLength({ min: 8 })
+            .withMessage("Password must be at least 8 characters long")
+            ,
+        body("name")
+            .trim()
+            .notEmpty()
+            .withMessage("Full name is required")
+            .isLength({ min: 2 })
+            .withMessage("Name must be more than two charecter"),
+        body("role")
+            .optional()
+            .isIn(Object.values(UserRole))
+            .withMessage(`Role must be one of: ${Object.values(UserRole).join(", ")}`)
+
+
+
+    ];
+};
+
+
+
+export {
+    userRegisterValidator
+}
