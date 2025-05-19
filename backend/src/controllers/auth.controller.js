@@ -127,9 +127,18 @@ export const login = asyncHandler(async (req, res) => {
             .json(response)
 
 })
-export const logout = async (req, res) => {
-
-}
+export const logout = asyncHandler(async (req, res) => {
+    const options = {
+        httpOnly: true,
+        sameSite: "strict",
+        secure: process.env.NODE_ENV !== "development",
+    }
+    const response = new ApiResponse(200,null,"User logged out successfully")
+    return res
+        .status(response.statusCode)
+        .clearCookie("jwt",options)
+        .json(response)
+})
 export const check = async (req, res) => {
 
 }
