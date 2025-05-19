@@ -5,11 +5,25 @@ import { UserRole } from '../generated/prisma/index.js';
 import { ApiError } from '../utils/api-error.js';
 import { ApiResponse } from '../utils/api-response.js';
 import { asyncHandler } from '../utils/async-handler.js';
+import { validationResult } from 'express-validator';
+
 
 
 
 
 export const register = asyncHandler(async (req, res) => {
+
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        const extractedErrors = errors.array().map(err => ({
+            field: err.param,
+            message: err.msg,
+        }));
+
+        throw new ApiError(400, "Validation failed", extractedErrors);
+    }
+
     const { email, password, name } = req.body;
     const existingUser = await db.user.findUnique({
         where: {
@@ -51,9 +65,9 @@ export const register = asyncHandler(async (req, res) => {
     )
 
     return res
-    .status(response.statusCode)
-    .cookie("jwt", token, options)
-    .json(response)
+        .status(response.statusCode)
+        .cookie("jwt", token, options)
+        .json(response)
 
 
 })
