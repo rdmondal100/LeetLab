@@ -21,7 +21,7 @@ export const register = asyncHandler(async (req, res) => {
             message: err.msg,
         }));
 
-        throw new ApiError(400, "Validation failed", extractedErrors);
+        throw new ApiError(400, "Register Validation failed", extractedErrors);
     }
 
     const { email, password, name } = req.body;
@@ -71,9 +71,62 @@ export const register = asyncHandler(async (req, res) => {
 
 
 })
-export const login = async (req, res) => {
 
-}
+
+export const login = asyncHandler(async (req, res) => {
+    
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        const extractedErrors = errors.array().map(err => ({
+            field: err.param,
+            message: err.msg,
+        }));
+
+        throw new ApiError(400, "Login Validation failed", extractedErrors);
+    }
+
+    const {email,password} = req.body;
+    const user = await db.user.findUnique({
+        where:{
+            email
+        }
+    })
+
+    if(!user){
+        throw new ApiError(400,"User does not exist")
+    }
+    
+    const isPasswordCorrect = await bcrypt.compare(password,user.password)
+    if(!isPasswordCorrect){
+        throw new ApiError(401,"Invalid credentials")
+    }
+
+    
+    const options = {
+        httpOnly: true,
+        sameSite: "strict",
+        secure: process.env.NODE_ENV !== "development",
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    }
+
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "7d" })
+
+    const response = new ApiResponse(200, {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        image: user.image
+    }, "User login successfully",
+    )
+
+    return res
+            .status(response.statusCode)
+            .cookie("jwt",token,options)
+            .json(response)
+
+})
 export const logout = async (req, res) => {
 
 }
