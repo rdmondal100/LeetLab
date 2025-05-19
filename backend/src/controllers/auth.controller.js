@@ -10,6 +10,7 @@ import { validationResult } from 'express-validator';
 
 
 
+
 export const register = asyncHandler(async (req, res) => {
 
     const errors = validationResult(req);
