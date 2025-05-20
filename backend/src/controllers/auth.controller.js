@@ -74,7 +74,7 @@ export const register = asyncHandler(async (req, res) => {
 
 
 export const login = asyncHandler(async (req, res) => {
-    
+
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -86,23 +86,23 @@ export const login = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Login Validation failed", extractedErrors);
     }
 
-    const {email,password} = req.body;
+    const { email, password } = req.body;
     const user = await db.user.findUnique({
-        where:{
+        where: {
             email
         }
     })
 
-    if(!user){
-        throw new ApiError(400,"User does not exist")
-    }
-    
-    const isPasswordCorrect = await bcrypt.compare(password,user.password)
-    if(!isPasswordCorrect){
-        throw new ApiError(401,"Invalid credentials")
+    if (!user) {
+        throw new ApiError(400, "User does not exist")
     }
 
-    
+    const isPasswordCorrect = await bcrypt.compare(password, user.password)
+    if (!isPasswordCorrect) {
+        throw new ApiError(401, "Invalid credentials")
+    }
+
+
     const options = {
         httpOnly: true,
         sameSite: "strict",
@@ -122,9 +122,9 @@ export const login = asyncHandler(async (req, res) => {
     )
 
     return res
-            .status(response.statusCode)
-            .cookie("jwt",token,options)
-            .json(response)
+        .status(response.statusCode)
+        .cookie("jwt", token, options)
+        .json(response)
 
 })
 export const logout = asyncHandler(async (req, res) => {
@@ -133,12 +133,19 @@ export const logout = asyncHandler(async (req, res) => {
         sameSite: "strict",
         secure: process.env.NODE_ENV !== "development",
     }
-    const response = new ApiResponse(200,null,"User logged out successfully")
+    const response = new ApiResponse(200, null, "User logged out successfully")
     return res
         .status(response.statusCode)
-        .clearCookie("jwt",options)
+        .clearCookie("jwt", options)
         .json(response)
 })
-export const check = async (req, res) => {
 
-}
+export const check = asyncHandler(async (req, res) => {
+    if(!req.user){
+        throw new ApiError(404,"User is not found in req")
+    }
+    const response = new ApiResponse(200, req.user, "User authenticated Successfully")
+    return res
+        .status(response.statusCode)
+        .json(response)
+})
