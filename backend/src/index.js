@@ -5,6 +5,7 @@ import cookieParser from 'cookie-parser'
 
 import authRoutes from './routes/auth.route.js'
 import globalErrorHandler from './middleware/globalErrorHandler.js'
+import problemRoutes from './routes/problem.route.js'
 dotenv.config()
 
 const app = express()
@@ -15,7 +16,9 @@ app.get("/",(req,res)=>{
     res.send("Sendnig the response from backend of leetlab")
 })
 
+//routes
 app.use("/api/v1/auth",authRoutes)
+app.use("/api/v1/problems",problemRoutes)
 
 
 app.listen(process.env.PORT, () => { 
