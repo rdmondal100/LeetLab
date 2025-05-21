@@ -1,5 +1,6 @@
 import { body } from "express-validator";
 import { UserRole } from "../generated/prisma/index.js";
+import { Difficulty } from "../generated/prisma/index.js";
 
 const userRegisterValidator = () => {
     return [
@@ -49,8 +50,72 @@ const userLoginValidator = ()=>{
     ]
 }
 
+
+const createProblemValidator = ()=> {
+    return [
+    body('title')
+      .notEmpty()
+      .withMessage('Title is required'),
+  
+    body('description')
+      .notEmpty()
+      .withMessage('Description is required'),
+  
+    body('difficulty')
+      .notEmpty()
+      .withMessage('Difficulty is required')
+      .isIn(Object.values(Difficulty))
+      .withMessage('Difficulty must be EASY, MEDIUM, or HARD'),
+  
+    body('tags')
+      .isArray({ min: 1 })
+      .withMessage('Tags must be an array with at least one tag'),
+  
+    body('examples')
+      .isObject()
+      .withMessage('Examples must be a valid JSON object'),
+  
+    body('constraints')
+      .notEmpty()
+      .withMessage('Constraints are required'),
+  
+    body('hints')
+      .optional()
+      .isString()
+      .withMessage('Hint must be a string'),
+  
+    body('editorial')
+      .optional()
+      .isString()
+      .withMessage('Editorial must be a string'),
+  
+    body('testcases')
+      .isArray({ min: 1 })
+      .withMessage('Testcases must be an array with at least one item')
+      .custom((testcases) => {
+        for (const test of testcases) {
+          if (
+            typeof test.input !== 'string' ||
+            typeof test.output !== 'string'
+          ) {
+            throw new Error('Each testcase must have input and output strings');
+          }
+        }
+        return true;
+      }),
+  
+    body('codeSnippet')
+      .isObject()
+      .withMessage('CodeSnippet must be a valid JSON object'),
+  
+    body('referenceSolution')
+      .isObject()
+      .withMessage('ReferenceSolution must be a valid JSON object')
+  ];
+}
 export {
     userRegisterValidator,
     userLoginValidator,
+    createProblemValidator
 
 }
