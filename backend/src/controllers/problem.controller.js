@@ -1,11 +1,99 @@
+import { validationResult } from "express-validator";
+import { db } from "../libs/db.js";
+import { ApiError } from "../utils/api-error.js";
+import { ApiResponse } from "../utils/api-response.js";
 import { asyncHandler } from "../utils/async-handler.js";
+import { getJudge0LanguageId, pollBatchResults, submitBatch } from "../utils/judge0.js";
 
-export const createProblem = asyncHandler(async(req,res)=>{
+export const createProblem = asyncHandler(async (req, res) => {
+
+        const errors = validationResult(req);
     
+        if (!errors.isEmpty()) {
+            const extractedErrors = errors.array().map(err => ({
+                field: err.param,
+                message: err.msg,
+            }));
+    
+            throw new ApiError(400, "Problem create Validation failed", extractedErrors);
+        }
+    
+
+
+    //  1 -> get all the data from the body
+    const { title, description, difficulty, tags, examples, constraints, hints, editorial, testcases, codeSnippet, referenceSolution, } = req.body;
+
+
+    //  2 -> check the user role if it is admin or not
+    if(req.user.role !=="ADMIN"){
+        throw new ApiError(403,"You are not allowed to create a problem")
+    }
+    //  3 -> loop  through each ref solution and
+
+    //extract the language and solutions code from the reference solutions
+    for(const[language, solutionCode] of Object.entries(referenceSolution)){
+        const languageId = getJudge0LanguageId(language)
+
+        if(!languageId){
+            throw new ApiError(400,`Language ${language} is not supported by leetLab`)
+        }
+
+
+    //test case submissions
+    const submissions = testcases.map(({input,output})=>({
+        source_code: solutionCode,
+        language_id: languageId,
+        stdin: input,
+        expected_output: output
+    }))
+    
+    const submissionResults = await submitBatch(submissions)
+    console.log("Submission in problme controller::",submissionResults)
+    const tokens = submissionResults.map((res)=>res.token)
+
+
+    const results = await pollBatchResults(tokens)
+    console.log("Get the results from poolbatch in contolller",results)
+
+    for(let i = 0; i< results.length;i++){
+        const result = results[i]
+        console.log("Result>>>>>>>>>>",result)
+        if(result.status.id !== 3){
+            throw new ApiError(400,`Testcase${i+1} failed for language ${language}`)
+
+        }
+    }
+
+    const newProblme = await db.problem.create({
+        data:{
+            title,
+            description,
+            difficulty,
+            tags,
+            examples,
+            constraints,
+            hints,
+            editorial,
+            testcases,
+            codeSnippet,
+            referenceSolution,
+            userId: req.user.id
+        }
+    })
+    const response = new ApiResponse(201,newProblme,"New problem created successfully")
+
+
+    return res
+            .status(response.statusCode)
+            .json(response)
+
+    }
 })
 
-export const getAllProblems = asyncHandler(async(req,res)=>{})
-export const getProblemById = asyncHandler(async(req,res)=>{})
-export const updateProblemById = asyncHandler(async(req,res)=>{})
-export const deleteProblemById = asyncHandler(async(req,res)=>{})
-export const getAllProblemsSolvedByUser = asyncHandler(async(req,res)=>{})
+
+
+export const getAllProblems = asyncHandler(async (req, res) => { })
+export const getProblemById = asyncHandler(async (req, res) => { })
+export const updateProblemById = asyncHandler(async (req, res) => { })
+export const deleteProblemById = asyncHandler(async (req, res) => { })
+export const getAllProblemsSolvedByUser = asyncHandler(async (req, res) => { })
