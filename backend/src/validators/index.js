@@ -51,7 +51,7 @@ const userLoginValidator = ()=>{
 }
 
 
-const createProblemValidator = ()=> {
+const problemValidator = ()=> {
     return [
     body('title')
       .notEmpty()
@@ -116,6 +116,6 @@ const createProblemValidator = ()=> {
 export {
     userRegisterValidator,
     userLoginValidator,
-    createProblemValidator
+    problemValidator
 
 }
