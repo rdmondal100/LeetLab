@@ -132,5 +132,28 @@ export const getProblemById = asyncHandler(async (req, res) => {
 
 
 export const updateProblemById = asyncHandler(async (req, res) => { })
-export const deleteProblemById = asyncHandler(async (req, res) => { })
+
+export const deleteProblemById = asyncHandler(async (req, res) => {
+    const {id} = req.params;
+
+    const problem = await db.problem.findUnique({
+        where:{id}
+    })
+
+    if(!problem){
+        throw new ApiError(404,"Problem not found")
+    }
+
+    await db.problem.delete({where:{id}})
+
+    const response = new ApiResponse(200,null,"Problem deleted Successfully")
+
+    return res 
+            .status(response.statusCode)
+            .json(response)
+
+
+ })
+
+ 
 export const getAllProblemsSolvedByUser = asyncHandler(async (req, res) => { })
