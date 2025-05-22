@@ -143,11 +143,28 @@ const executeCodeValidator = () => {
   ]
 }
 
+const playListValidator = ()=>{
+  return [
+    body("name")
+    .trim()
+    .notEmpty()
+    .withMessage("Name is required")
+    .isString()
+    .withMessage("Name must be a string"),
+
+    body("description")
+    .trim()
+    .optional()
+    .isString()
+    .withMessage("Description must be a string")
+  ]
+}
 
 export {
   userRegisterValidator,
   userLoginValidator,
   problemValidator,
-  executeCodeValidator
+  executeCodeValidator,
+  playListValidator
 
 }
