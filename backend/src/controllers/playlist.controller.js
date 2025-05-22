@@ -35,7 +35,25 @@ data:{
 
 
 export const getPlayListDetails = asyncHandler(async(req,res )=>{
-    
+    const userId = req.user.id
+    const playLists = await db.playList.findMany({
+        where:{
+            userId
+        },
+        include:{
+            problems:{
+                include:{
+                    problem: true
+                }
+            }
+        }
+    })
+
+    const response = new ApiResponse(200,playLists,"Fetched playListDetails successfully")
+
+    return res 
+            .status(response.statusCode)
+            .json(response)
 })
 
 
