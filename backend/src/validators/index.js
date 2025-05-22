@@ -160,11 +160,21 @@ const playListValidator = ()=>{
   ]
 }
 
+export const problemsIdValidator = [
+  body('problemIds')
+    .exists({ checkNull: true }).withMessage('problemIds is required')
+    .isArray({ min: 1 }).withMessage('problemIds must be a non-empty array'),
+
+  body('problemIds.*')
+    .isUUID().withMessage('Each problemId must be a valid UUID')
+];
+
 export {
   userRegisterValidator,
   userLoginValidator,
   problemValidator,
   executeCodeValidator,
-  playListValidator
+  playListValidator,
+  problemsIdValidator
 
 }
