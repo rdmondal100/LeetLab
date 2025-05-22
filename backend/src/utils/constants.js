@@ -5,4 +5,4 @@ export const suportedLanguages = {
     62: "Java"
 }
 
-export const supportedLanguagesId = Object.keys(suportedLanguages)
+export const supportedLanguagesId = Object.keys(suportedLanguages).map(Number)
