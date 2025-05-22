@@ -108,9 +108,9 @@ export const getAllProblems = asyncHandler(async (req, res) => {
 })
 
 export const getProblemById = asyncHandler(async (req, res) => {
-    const { id} = req.params;
-    if(!id){
-        throw new ApiError(404,"Problem id not found")
+    const { id } = req.params;
+    if (!id) {
+        throw new ApiError(404, "Problem id not found")
     }
     const problem = await db.problem.findUnique({
         where: {
@@ -148,9 +148,9 @@ export const updateProblemById = asyncHandler(async (req, res) => {
 
     const { title, description, difficulty, tags, examples, constraints, hints, editorial, testcases, codeSnippet, referenceSolution, } = req.body;
 
-    const {id} = req.params;
-    if(!id){
-        throw ApiError(404,"Problem id not found")
+    const { id } = req.params;
+    if (!id) {
+        throw ApiError(404, "Problem id not found")
     }
 
     if (req.user.role !== "ADMIN") {
@@ -186,10 +186,10 @@ export const updateProblemById = asyncHandler(async (req, res) => {
         }
 
         const updatedProblem = await db.problem.update({
-            where:{
+            where: {
                 id
             },
-            data:{
+            data: {
                 title,
                 description,
                 difficulty,
@@ -204,7 +204,7 @@ export const updateProblemById = asyncHandler(async (req, res) => {
                 userId: req.user.id
             }
         })
-        
+
         console.log(updatedProblem)
 
         const response = new ApiResponse(200, updatedProblem, "Problem updated successfully")
@@ -215,41 +215,64 @@ export const updateProblemById = asyncHandler(async (req, res) => {
             .json(response)
 
     }
-    
-  
 
 
 
 
-    
 
 
 
- })
+
+
+
+})
 
 
 
 export const deleteProblemById = asyncHandler(async (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
 
     const problem = await db.problem.findUnique({
-        where:{id}
+        where: { id }
     })
 
-    if(!problem){
-        throw new ApiError(404,"Problem not found")
+    if (!problem) {
+        throw new ApiError(404, "Problem not found")
     }
 
-    await db.problem.delete({where:{id}})
+    await db.problem.delete({ where: { id } })
 
-    const response = new ApiResponse(200,null,"Problem deleted Successfully")
+    const response = new ApiResponse(200, null, "Problem deleted Successfully")
 
-    return res 
-            .status(response.statusCode)
-            .json(response)
-
-
- })
+    return res
+        .status(response.statusCode)
+        .json(response)
 
 
-export const getAllProblemsSolvedByUser = asyncHandler(async (req, res) => { })
+})
+
+
+export const getAllProblemsSolvedByUser = asyncHandler(async (req, res) => {
+    const userId = req.user.id
+
+    const problmeSolvedByLoggedInUser = await db.problem.findMany({
+        where: {
+            solvedBy: {
+                some: { userId }
+            }
+        },
+        include: {
+            solvedBy: {
+                where: { userId }
+            }
+        }
+    })
+
+    
+
+    const response = new ApiResponse(200, problmeSolvedByLoggedInUser, "Fetched problem solved by loggedIn user successfully")
+
+    return res
+        .status(response.statusCode)
+        .json(response)
+})
