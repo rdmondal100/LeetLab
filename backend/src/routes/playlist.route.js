@@ -1,11 +1,12 @@
 import express from 'express'
 import { checkAuthenticated } from '../middleware/authMiddleware.js'
 import { addProblemToPlayList, createPlayList, deletePlayList, getAllListDetails, getPlayListDetails, removeProblemFromPlayList } from '../controllers/playlist.controller.js'
+import { playListValidator } from '../validators/index.js'
 
 const playlistRoutes = express.Router()
 
 
-playlistRoutes.get("/", checkAuthenticated, getAllListDetails)
+playlistRoutes.get("/",playListValidator(), checkAuthenticated, getAllListDetails)
 playlistRoutes.get("/:playListId", checkAuthenticated, getPlayListDetails)
 playlistRoutes.post("/create-playList", checkAuthenticated, createPlayList)
 playlistRoutes.post("/:playListId/add-problem", checkAuthenticated, addProblemToPlayList)
