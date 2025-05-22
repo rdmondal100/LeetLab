@@ -30,22 +30,41 @@ const sleep = (seconds)=>{
 }
 
 
-export const pollBatchResults = async(tokens)=>{
-    while(true){
-        const {data} = await axios.get(`${process.env.JUDGE0_API_URL}/submissions/batch`,{
-            params:{
-                tokens: tokens.join(","),
+export const pollBatchResults = async (tokens) => {
+    const MAX_RETRIES = 15;
+    const DELAY_SECONDS = 2;
+    let attempts = 0;
+
+    while (attempts < MAX_RETRIES) {
+        const { data } = await axios.get(`${process.env.JUDGE0_API_URL}/submissions/batch`, {
+            params: {
+                tokens: tokens.join(','),
                 base64_encoded: false,
+                fields: 'stdout,stderr,compile_output,status,memory,time'
             }
-        })
+        });
 
-        const results = data.submissions
+        const results = data.submissions;
+        const isAllDone = results.every(r => r.status.id >= 3); 
+        
 
-        const isAllDone = results.every((r)=>r.status.id !== 1 && r.status.id !== 2)
+        if (isAllDone) return results;
 
-        if(isAllDone) return results
-
-        await sleep(1)
-    
+        await sleep(DELAY_SECONDS);
+        attempts++;
     }
+
+    throw new ApiError(408, 'Timeout: Judge0 did not return results in time.');
+};
+
+
+export const getLanguageName = (langId)=>{
+    const  LANGUAGE_NAMES = {
+        74: "TypeScript",
+        63:"JavaScript",
+        71: "Python",
+        62: "Java"
+    }
+
+    return LANGUAGE_NAMES[langId]
 }
