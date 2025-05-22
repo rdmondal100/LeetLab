@@ -1,6 +1,7 @@
 import { body } from "express-validator";
 import { UserRole } from "../generated/prisma/index.js";
 import { Difficulty } from "../generated/prisma/index.js";
+import { supportedLanguagesId } from "../utils/constants.js";
 
 const userRegisterValidator = () => {
   return [
