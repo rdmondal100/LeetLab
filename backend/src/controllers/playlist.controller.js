@@ -2,6 +2,7 @@ import { validationResult } from "express-validator";
 import { db } from "../libs/db.js";
 import { ApiResponse } from "../utils/api-response.js";
 import { asyncHandler } from "../utils/async-handler.js";
+import { ApiError } from "../utils/api-error.js";
 
 
 export const createPlayList = asyncHandler(async(req,res )=>{
@@ -58,6 +59,31 @@ export const getAllListDetails = asyncHandler(async(req,res )=>{
 
 
 export const getPlayListDetails = asyncHandler(async(req,res )=>{
+    const {playListId} = req.params
+    const userId = req.user.id;
+
+    const playList = await db.playList.findUnique({
+        where:{
+            userId,
+            playListId
+        },
+        include:{
+            problems:{
+                include:{
+                    problem: true
+                }
+            }
+        }
+    })
+    if(!playList){
+        throw new ApiError(404,"Playlist not found")
+    }
+    
+    const response = new ApiResponse(200,playList,"Fetched PlayListDetails successfully")
+
+    return res 
+            .status(response.statusCode)
+            .json(response)
 
 })
 
