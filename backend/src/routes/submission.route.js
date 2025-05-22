@@ -1,6 +1,6 @@
 
 import express from 'express'
-import { checkAuthenticated } from '../middleware/authMiddleware'
+import { checkAuthenticated } from '../middleware/authMiddleware.js'
 import { getAllSubmission, getSubmissionCountForTheProblem, getSubmissionsForProblem } from '../controllers/submission.controller.js'
 
 const submissionRoutes = express.Router()
