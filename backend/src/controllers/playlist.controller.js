@@ -78,7 +78,7 @@ export const getPlayListDetails = asyncHandler(async(req,res )=>{
     if(!playList){
         throw new ApiError(404,"Playlist not found")
     }
-    
+
     const response = new ApiResponse(200,playList,"Fetched PlayListDetails successfully")
 
     return res 
@@ -88,6 +88,27 @@ export const getPlayListDetails = asyncHandler(async(req,res )=>{
 })
 
 
-export const addProblemToPlayList = asyncHandler(async(req,res )=>{})
+export const addProblemToPlayList = asyncHandler(async(req,res )=>{
+    const {playListId} = req.params
+    const {problemIds} = req.body; //can handle multiple probles at a time
+
+    const problemsInPlayList = await db.problemInPlaylist.createMany({
+data: problemIds.map((problemId)=>({
+    playListId,
+    problemId
+}))
+    })
+
+    const response = new ApiResponse(201,problemsInPlayList,"problemsInPlayList added successfully")
+
+    return res 
+            .status(response.statusCode)
+            .json(response)
+    
+
+
+})
+
+
 export const deletePlayList = asyncHandler(async(req,res )=>{})
 export const removeProblemFromPlayList = asyncHandler(async(req,res )=>{})
