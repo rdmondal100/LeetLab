@@ -28,7 +28,7 @@ data:{
 }
     })
 
-    const response = new ApiResponse(200,playlist,"Playlist created successfully")
+    const response = new ApiResponse(201,playlist,"Playlist created successfully")
     return res 
             .status(response.statusCode)
             .json(response)
