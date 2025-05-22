@@ -39,6 +39,19 @@ export const getSubmissionsForProblem = asyncHandler(async(req,res)=>{
 
 export const getSubmissionCountForTheProblem = asyncHandler(async(req,res)=>{
 
+    const problemId = req.params.problemId;
+    const submissionCounts = await db.submission.count({
+        where:{
+            problemId
+        }
+    })
+
+    const response = new ApiResponse(200,submissionCounts,"Fetched all submission successfully")
+
+    return res 
+            .status(response.statusCode)
+            .json(response)
+
 })
 
 
