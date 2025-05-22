@@ -4,7 +4,7 @@ import { ApiResponse } from "../utils/api-response.js";
 import { asyncHandler } from "../utils/async-handler.js";
 
 
-export const getAllListDetails = asyncHandler(async(req,res )=>{
+export const createPlayList = asyncHandler(async(req,res )=>{
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -13,7 +13,7 @@ export const getAllListDetails = asyncHandler(async(req,res )=>{
             message: err.msg,
         }));
 
-        throw new ApiError(400, "Getting AllListDetails Validation failed", extractedErrors);
+        throw new ApiError(400, "CreatePlayList Validation failed", extractedErrors);
     }
 
     const {name,description} = req.body;
@@ -34,7 +34,7 @@ data:{
 })
 
 
-export const getPlayListDetails = asyncHandler(async(req,res )=>{
+export const getAllListDetails = asyncHandler(async(req,res )=>{
     const userId = req.user.id
     const playLists = await db.playList.findMany({
         where:{
@@ -49,7 +49,7 @@ export const getPlayListDetails = asyncHandler(async(req,res )=>{
         }
     })
 
-    const response = new ApiResponse(200,playLists,"Fetched playListDetails successfully")
+    const response = new ApiResponse(200,playLists,"Fetched allPlayListDetails successfully")
 
     return res 
             .status(response.statusCode)
@@ -57,7 +57,11 @@ export const getPlayListDetails = asyncHandler(async(req,res )=>{
 })
 
 
-export const createPlayList = asyncHandler(async(req,res )=>{})
+export const getPlayListDetails = asyncHandler(async(req,res )=>{
+
+})
+
+
 export const addProblemToPlayList = asyncHandler(async(req,res )=>{})
 export const deletePlayList = asyncHandler(async(req,res )=>{})
 export const removeProblemFromPlayList = asyncHandler(async(req,res )=>{})
