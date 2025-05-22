@@ -1,3 +1,4 @@
+import { validationResult } from "express-validator";
 import { db } from "../libs/db.js";
 import { ApiError } from "../utils/api-error.js";
 import { ApiResponse } from "../utils/api-response.js";
@@ -6,6 +7,20 @@ import { getLanguageName, pollBatchResults, submitBatch } from "../utils/judge0.
 
 
 export const submitCode = asyncHandler(async (req, res,) => {
+
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        const extractedErrors = errors.array().map(err => ({
+            field: err.param,
+            message: err.msg,
+        }));
+
+        throw new ApiError(400, "Submit Validation failed", extractedErrors);
+    }
+
+
+
     const { source_code, language_id, stdin, expected_outputs, problemId } = req.body
 
     const userId = req.user.id
@@ -73,7 +88,7 @@ export const submitCode = asyncHandler(async (req, res,) => {
 
     })
 
-    console.log("__________Submissions results_______")
+
     console.log(submissionResult)
 
     if(allPassed){
@@ -127,6 +142,19 @@ export const submitCode = asyncHandler(async (req, res,) => {
 })
 
 export const runCode = asyncHandler(async(req,res)=>{
+
+    const errors = validationResult(req);
+    
+        if (!errors.isEmpty()) {
+            const extractedErrors = errors.array().map(err => ({
+                field: err.param,
+                message: err.msg,
+            }));
+    
+            throw new ApiError(400, "Run code Validation failed", extractedErrors);
+        }
+    
+
     const { source_code, language_id, stdin, expected_outputs, problemId } = req.body
 
     const userId = req.user.id
