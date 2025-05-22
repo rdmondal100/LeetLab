@@ -11,7 +11,7 @@ playlistRoutes.get("/:playListId", checkAuthenticated, getPlayListDetails)
 playlistRoutes.post("/create-playList",playListValidator(), checkAuthenticated, createPlayList)
 playlistRoutes.post("/:playListId/add-problem",problemsIdValidator(), checkAuthenticated, addProblemToPlayList)
 playlistRoutes.delete("/:playListId", checkAuthenticated, deletePlayList)
-playlistRoutes.delete("/:playListId/remove-problem", checkAuthenticated, removeProblemFromPlayList)
+playlistRoutes.delete("/:playListId/remove-problem",problemsIdValidator(), checkAuthenticated, removeProblemFromPlayList)
 
 
 export default playlistRoutes

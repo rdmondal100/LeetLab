@@ -89,6 +89,18 @@ export const getPlayListDetails = asyncHandler(async(req,res )=>{
 
 
 export const addProblemToPlayList = asyncHandler(async(req,res )=>{
+
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        const extractedErrors = errors.array().map(err => ({
+            field: err.param,
+            message: err.msg,
+        }));
+
+        throw new ApiError(400, "AddProblemToPlayList Validation failed", extractedErrors);
+    }
+
     const {playListId} = req.params
     const {problemIds} = req.body; //can handle multiple probles at a time
 
@@ -110,5 +122,56 @@ data: problemIds.map((problemId)=>({
 })
 
 
-export const deletePlayList = asyncHandler(async(req,res )=>{})
-export const removeProblemFromPlayList = asyncHandler(async(req,res )=>{})
+export const deletePlayList = asyncHandler(async(req,res )=>{
+   
+    const {playListId} = req.params;
+
+    const deletedPlaylist = await db.playList.delete({
+        where:{
+            id: playListId
+        }
+    })
+
+    const response = new ApiResponse(200,deletedPlaylist,"PlayList deleted successfully")
+
+    return res 
+            .status(response.statusCode)
+            .json(response)
+    
+
+
+})
+
+
+export const removeProblemFromPlayList = asyncHandler(async(req,res )=>{
+
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        const extractedErrors = errors.array().map(err => ({
+            field: err.param,
+            message: err.msg,
+        }));
+
+        throw new ApiError(400, "DeletePlayList Validation failed", extractedErrors);
+    }
+
+    const {playListId} = req.params;
+    const {problemIds} =  req.body;
+
+    const removedProblemsFromPlaylist = await db.problemInPlaylist.deleteMany({
+        where:{
+            playListId,
+            problemId:{
+                in: problemIds
+            }
+        }
+    })
+
+    const response = new ApiResponse(201,removedProblemsFromPlaylist,"Problem removed from the playlist successfully")
+
+    return res 
+            .status(response.statusCode)
+            .json(response)
+    
+})
