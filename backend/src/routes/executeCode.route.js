@@ -1,10 +1,11 @@
 
 import express from 'express'
 import { checkAuthenticated } from '../middleware/authMiddleware.js'
-import { executeCode } from '../controllers/executeCode.controller.js'
+import { runCode, submitCode } from '../controllers/executeCode.controller.js'
 
 const executionRoutes = express.Router()
 
-executionRoutes.post("/",checkAuthenticated,executeCode)
+executionRoutes.post("/submit-code",checkAuthenticated,submitCode)
+executionRoutes.post("/run-code",checkAuthenticated,runCode)
 
 export default executionRoutes
