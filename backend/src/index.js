@@ -8,6 +8,7 @@ import globalErrorHandler from './middleware/globalErrorHandler.js'
 import problemRoutes from './routes/problem.route.js'
 import executionRoutes from './routes/executeCode.route.js'
 import submissionRoutes from './routes/submission.route.js'
+import playlistRoutes from './routes/playlist.route.js'
 
 dotenv.config()
 
@@ -24,6 +25,7 @@ app.use("/api/v1/auth",authRoutes)
 app.use("/api/v1/problems",problemRoutes)
 app.use("/api/v1/execute-code",executionRoutes)
 app.use("/api/v1/submission",submissionRoutes)
+app.use("/api/v1/playlist",playlistRoutes)
 
 
 app.listen(process.env.PORT, () => { 
