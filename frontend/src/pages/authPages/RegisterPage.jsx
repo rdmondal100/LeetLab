@@ -37,7 +37,7 @@ const RegisterPage = () => {
 	};
 
 	return (
-		<div className=' absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-popover border rounded-lg shadow-lg w-full max-w-[20rem] px-10 py-7'>
+		<div className=' absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-popover border rounded-lg shadow-lg w-full max-w-[22rem] px-10 py-7'>
 			<div className='flex pb-5 flex-col gap-3 justify-center items-center '>
 				<div className='logo font-black text-2xl flex justify-center items-center gap-2'>
 					<Code size={35} className='font-extrabold text-4xl text-primary' />
@@ -101,11 +101,14 @@ const RegisterPage = () => {
 							</FormItem>
 						)}
 					/>
-                    <div className="button-container flex justify-center">
-					<Button className="  cursor-pointer" type='submit'>Register</Button>
-                    </div>
+                 
+					<Button className=" w-full  cursor-pointer" type='submit'>Register</Button>
 				</form>
 			</Form>
+
+            <div className="mt-1">
+                <div className="text-muted-foreground">Already have an account? <span className="text-primary">Login</span></div>
+            </div>
 		</div>
 	);
 };
