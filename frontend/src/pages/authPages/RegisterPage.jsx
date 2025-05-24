@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { registerFormSchema } from "../../schemas/registerFormSchema";
+import { Link } from "react-router-dom";
 
 const RegisterPage = () => {
 	const [showPassword, setShowPassword] = useState(false);
@@ -106,8 +107,8 @@ const RegisterPage = () => {
 				</form>
 			</Form>
 
-            <div className="mt-1">
-                <div className="text-muted-foreground">Already have an account? <span className="text-primary">Login</span></div>
+            <div className="mt-2 flex justify-center">
+                <div className="text-muted-foreground">Already have an account? <Link to="/login" className="text-primary">Login</Link></div>
             </div>
 		</div>
 	);
