@@ -9,7 +9,6 @@ import { store } from './redux-toolkit/store.js'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>
-      
     <BrowserRouter>
     <App/>
     </BrowserRouter>
