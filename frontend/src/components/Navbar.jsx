@@ -55,26 +55,39 @@ const Navbar = () => {
 				</div>
 
 				<DropdownMenu>
-					<DropdownMenuTrigger className="ring-1 ring-border overflow-hidden" asChild>
+					<DropdownMenuTrigger
+						className='ring-1 ring-border overflow-hidden'
+						asChild
+					>
 						<Avatar className='w-10 h-10  cursor-pointer  '>
-							<AvatarImage className="p-1 overflow-hidden " src={authUser?.image} alt={authUser?.name} />
-							<AvatarFallback className=" p-1 overflow-hidden">
+							<AvatarImage
+								className='p-1 overflow-hidden '
+								src={authUser?.image}
+								alt={authUser?.name}
+							/>
+							<AvatarFallback className=' p-1 overflow-hidden'>
 								{" "}
 								<img src={avaterPlaceholder} alt={authUser?.name} />{" "}
 							</AvatarFallback>
 						</Avatar>
 					</DropdownMenuTrigger>
-					<DropdownMenuContent align='end' className='w-40 flex flex-col gap-1.5'>
+					<DropdownMenuContent
+						align='end'
+						className='w-40 flex flex-col gap-1.5'
+					>
 						<DropdownMenuLabel>My Account</DropdownMenuLabel>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem className='flex cursor-pointer items-center'>
 							<UserCircle />
 							Profile
 						</DropdownMenuItem>
-						<DropdownMenuItem className='flex cursor-pointer items-center '>
-							<Code />
-							Add Problem
-						</DropdownMenuItem>
+						{authUser?.role === "ADMIN" && (
+							<DropdownMenuItem className='flex cursor-pointer items-center '>
+								<Code />
+								Add Problem
+							</DropdownMenuItem>
+						)}
+
 						<DropdownMenuItem className='flex cursor-pointer  items-center '>
 							<LogOut />
 							Logout
