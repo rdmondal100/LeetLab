@@ -12,7 +12,7 @@ import {
 	FormLabel,
 	FormMessage,
 } from "@/components/ui/form";
-import { toast } from "sonner"
+import { toast } from "sonner";
 
 import { Input } from "@/components/ui/input";
 
@@ -20,12 +20,11 @@ import { Link } from "react-router-dom";
 import { loginFormSchema } from "../../schemas/loginFormSchema";
 import { useLoginUserMutation } from "../../redux-toolkit/services/authService";
 
-
 const LoginPage = () => {
 	const [showPassword, setShowPassword] = useState(false);
 
-    const [loginUser,{isLoading,isSuccess,isError,error}] = useLoginUserMutation()
-
+	const [loginUser, { isLoading, isSuccess, isError, error }] =
+		useLoginUserMutation();
 
 	// 1. Define your form.
 	const form = useForm({
@@ -39,28 +38,27 @@ const LoginPage = () => {
 
 	// 2. Define a submit handler.
 	const onSubmit = async (loginFormData) => {
-       
 		try {
-            const userData = {
-                email: loginFormData.email.trim(),
-                password: loginFormData.password.trim(),
-            }
-            console.log(userData)
-            const response = await loginUser(userData).unwrap()
-      
-            console.log("User Logged in:",response)
-            const successMessage = response.data.message || "User Loggedin Successfully"
-            toast.success(successMessage,)
-            form.reset()
-        } catch (err) {
-            console.error("Login failed:", err);
+			const userData = {
+				email: loginFormData.email.trim(),
+				password: loginFormData.password.trim(),
+			};
+			console.log(userData);
+			const response = await loginUser(userData).unwrap();
 
-            const errorMessage =
-              err?.data?.message || err?.error || "Something went wrong";
-        
-            toast.error(errorMessage);
-        }
-        
+			console.log("User Logged in:", response);
+			const successMessage =
+				response.data.message || "User Loggedin Successfully";
+			toast.success(successMessage);
+			form.reset();
+		} catch (err) {
+			console.error("Login failed:", err);
+
+			const errorMessage =
+				err?.data?.message || err?.error || "Something went wrong";
+
+			toast.error(errorMessage);
+		}
 	};
 
 	return (
@@ -70,11 +68,12 @@ const LoginPage = () => {
 					<Code size={35} className='font-extrabold text-4xl text-primary' />
 					<h1>LeetLab</h1>
 				</div>
-                <div className="">
-                    <h1 className=" font-bold text-[1.7rem]">Wellcome Back</h1>
-                    <p className="text-muted-foreground text-base">Login to get full access</p>
-                </div>
-
+				<div className=''>
+					<h1 className=' font-bold text-[1.7rem]'>Wellcome Back</h1>
+					<p className='text-muted-foreground text-base'>
+						Login to get full access
+					</p>
+				</div>
 			</div>
 			<Form {...form}>
 				<form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
@@ -86,7 +85,7 @@ const LoginPage = () => {
 								<FormLabel>Email</FormLabel>
 								<FormControl>
 									<Input
-                                     className=" rounded-lg h-11"
+										className=' rounded-lg h-11'
 										type='email'
 										placeholder='example@gmail.com'
 										{...field}
@@ -96,42 +95,59 @@ const LoginPage = () => {
 							</FormItem>
 						)}
 					/>
-                    <div className=" relative">
-                    <FormField
+					<FormField
 						control={form.control}
 						name='password'
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel>Password</FormLabel>
 								<FormControl>
-									<Input
-                                     className=" rounded-lg h-11"
-										type={showPassword? "text":"password"}
-										placeholder='Pass@word111'
-										{...field}
-									/>
+									<div className=' relative'>
+										<Input
+											className=' rounded-lg h-11'
+											type={showPassword ? "text" : "password"}
+											placeholder='Pass@word111'
+											{...field}
+										/>
+										<div
+											className=' text-primary absolute right-2 top-[25%] cursor-pointer'
+											onClick={() => setShowPassword((prev) => !prev)}
+										>
+											{showPassword ? <Eye /> : <EyeClosed />}
+										</div>
+									</div>
 								</FormControl>
 
 								<FormMessage />
 							</FormItem>
 						)}
 					/>
-                    <div className=" text-primary absolute right-2 top-1/2 cursor-pointer" onClick={()=>setShowPassword((prev)=>!prev)} >
-                    {showPassword? (<Eye />):(<EyeClosed/>)}
-                    </div>
-                    </div>
-				
-                 
-                 <Button className="w-full cursor-pointer" type='submit' disabled={isLoading}>
-  {isLoading ? (<div className="flex gap-1 justify-center items-center"><Loader2 className="animate-spin" size={18} />Logingin..</div>) : ('Login')}
-</Button>
 
+					<Button
+						className='w-full cursor-pointer'
+						type='submit'
+						disabled={isLoading}
+					>
+						{isLoading ? (
+							<div className='flex gap-1 justify-center items-center'>
+								<Loader2 className='animate-spin' size={18} />
+								Logingin..
+							</div>
+						) : (
+							"Login"
+						)}
+					</Button>
 				</form>
 			</Form>
 
-            <div className="mt-2 flex justify-center">
-                <div className="text-muted-foreground">Don't have an account? <Link to="/register" className="text-primary">Register</Link></div>
-            </div>
+			<div className='mt-2 flex justify-center'>
+				<div className='text-muted-foreground'>
+					Don't have an account?{" "}
+					<Link to='/register' className='text-primary'>
+						Register
+					</Link>
+				</div>
+			</div>
 		</div>
 	);
 };
