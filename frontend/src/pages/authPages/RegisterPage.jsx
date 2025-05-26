@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Code, Eye, Loader2, Lock, Mail } from "lucide-react";
+import { Code, Eye, EyeClosed, Loader2, Lock, Mail } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -50,9 +50,7 @@ const RegisterPage = () => {
       
             console.log("User Registered:",response)
             const successMessage = response.data.message || "User Registered Successfully"
-            toast.success(successMessage,{
-                className:"text-green-60 bg-green-100"
-            })
+            toast.success(successMessage,)
             form.reset()
         } catch (err) {
             console.error("Registration failed:", err);
@@ -60,9 +58,7 @@ const RegisterPage = () => {
             const errorMessage =
               err?.data?.message || err?.error || "Something went wrong";
         
-            toast.error(errorMessage,{
-                className:"text-destructive bg-destructive/50"
-            });
+            toast.error(errorMessage);
         }
         
 	};
@@ -113,7 +109,8 @@ const RegisterPage = () => {
 							</FormItem>
 						)}
 					/>
-					<FormField
+                    <div className=" relative">
+                    <FormField
 						control={form.control}
 						name='password'
 						render={({ field }) => (
@@ -122,7 +119,7 @@ const RegisterPage = () => {
 								<FormControl>
 									<Input
                                      className=" rounded-lg h-11"
-										type='password'
+										type={showPassword? "text":"password"}
 										placeholder='Pass@word111'
 										{...field}
 									/>
@@ -132,6 +129,11 @@ const RegisterPage = () => {
 							</FormItem>
 						)}
 					/>
+                    <div className=" text-primary absolute right-2 top-1/2 cursor-pointer" onClick={()=>setShowPassword((prev)=>!prev)} >
+                    {showPassword? (<Eye />):(<EyeClosed/>)}
+                    </div>
+                    </div>
+				
                  
                  <Button className="w-full" type='submit' disabled={isLoading}>
   {isLoading ? (<div className="flex gap-1 justify-center items-center"><Loader2 className="animate-spin" size={18} />Registering..</div>) : ('Register')}
