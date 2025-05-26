@@ -9,7 +9,7 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { UserCircle, Search } from "lucide-react";
+import { UserCircle, Search, } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
@@ -43,7 +43,7 @@ const Navbar = () => {
 			</div>
 
 			{/* Right: Search + Profile */}
-			<div className='flex items-center gap-4'>
+			<div className='flex items-center gap-2'>
 				<div className='relative'>
 					<Input
 						type='text'
@@ -55,8 +55,8 @@ const Navbar = () => {
 
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
-						<Button variant='ghost' className='p-0 hover:bg-transparent'>
-							<UserCircle className='h-6 w-6 text-muted-foreground hover:text-primary transition' />
+						<Button variant='ghost' className='p-0 hover:bg-transparent '>
+							<UserCircle size={50} className=' !w-6 !h-6 text-muted-foreground hover:text-primary transition' />
 						</Button>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end' className='w-40'>
