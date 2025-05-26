@@ -14,10 +14,12 @@ import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avater";
 import { useSelector } from "react-redux";
 import { avaterPlaceholder } from "../assets";
+import LogoutButton from "./LogoutButton";
+import { getAvatarFallBackName } from "../lib/utils";
 
 const Navbar = () => {
-	const authUser = useSelector((state) => state.auth?.authUser?.data);
-	return (
+	const authUser = useSelector((state) => state.auth?.authUser);
+    return (
 		<nav className='w-full container bg-background px-6 py-3 flex items-center justify-between '>
 			<Link
 				to='/'
@@ -62,12 +64,11 @@ const Navbar = () => {
 						<Avatar className='w-10 h-10  cursor-pointer  '>
 							<AvatarImage
 								className='p-1 overflow-hidden '
-								src={authUser?.image}
+								src={authUser?.image || avaterPlaceholder}
 								alt={authUser?.name}
 							/>
 							<AvatarFallback className=' p-1 overflow-hidden'>
-								{" "}
-								<img src={avaterPlaceholder} alt={authUser?.name} />{" "}
+								{getAvatarFallBackName(authUser?.name)}
 							</AvatarFallback>
 						</Avatar>
 					</DropdownMenuTrigger>
@@ -88,9 +89,11 @@ const Navbar = () => {
 							</DropdownMenuItem>
 						)}
 
-						<DropdownMenuItem className='flex cursor-pointer  items-center '>
-							<LogOut />
+						<DropdownMenuItem className='flex cursor-pointer  items-center p-0 '>
+                            <LogoutButton>
+                            <LogOut />
 							Logout
+                            </LogoutButton>
 						</DropdownMenuItem>
 					</DropdownMenuContent>
 				</DropdownMenu>
