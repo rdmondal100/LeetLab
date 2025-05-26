@@ -17,7 +17,6 @@ import { avaterPlaceholder } from "../assets";
 
 const Navbar = () => {
 	const authUser = useSelector((state) => state.auth?.authUser?.data);
-	console.log(authUser);
 	return (
 		<nav className='w-full container bg-background px-6 py-3 flex items-center justify-between '>
 			<Link
@@ -56,10 +55,10 @@ const Navbar = () => {
 				</div>
 
 				<DropdownMenu>
-					<DropdownMenuTrigger asChild>
-						<Avatar className='cursor-pointer'>
-							<AvatarImage src={authUser?.image} alt={authUser?.name} />
-							<AvatarFallback>
+					<DropdownMenuTrigger className="ring-1 ring-border overflow-hidden" asChild>
+						<Avatar className='w-10 h-10  cursor-pointer  '>
+							<AvatarImage className="p-1 overflow-hidden " src={authUser?.image} alt={authUser?.name} />
+							<AvatarFallback className=" p-1 overflow-hidden">
 								{" "}
 								<img src={avaterPlaceholder} alt={authUser?.name} />{" "}
 							</AvatarFallback>
