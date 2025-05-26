@@ -68,10 +68,10 @@ const LoginPage = () => {
 					<Code size={35} className='font-extrabold text-4xl text-primary' />
 					<h1>LeetLab</h1>
 				</div>
-				<div className=''>
+				<div className='flex flex-col justify-center items-center'>
 					<h1 className=' font-bold text-[1.7rem]'>Wellcome Back</h1>
 					<p className='text-muted-foreground text-base'>
-						Login to get full access
+						Login to your account
 					</p>
 				</div>
 			</div>
