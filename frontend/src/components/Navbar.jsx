@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { UserCircle, Search, } from "lucide-react";
 import { Link } from "react-router-dom";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avater";
 
 const Navbar = () => {
 	return (
@@ -55,9 +56,10 @@ const Navbar = () => {
 
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
-						<Button variant='ghost' className='p-0 hover:bg-transparent '>
-							<UserCircle size={50} className=' !w-6 !h-6 text-muted-foreground hover:text-primary transition' />
-						</Button>
+                    <Avatar className="cursor-pointer">
+      <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+      <AvatarFallback>CN</AvatarFallback>
+    </Avatar>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end' className='w-40'>
 						<DropdownMenuLabel>My Account</DropdownMenuLabel>
