@@ -22,7 +22,7 @@ const App  = ()=>{
        path="/login" 
 
        element={
-        <ProtectedRoute authentication={true}>
+        <ProtectedRoute authentication={false}>
           <LoginPage/>
         </ProtectedRoute>
       }
@@ -30,12 +30,21 @@ const App  = ()=>{
 
       <Route 
       path="/register" 
-      element={<RegisterPage/>} 
+      element={
+        <ProtectedRoute authentication={false} >
+      <RegisterPage/>
+
+        </ProtectedRoute>}
       />
 
       <Route 
       path='/' 
-      element={<HomePage/>}
+      element={
+        <ProtectedRoute authentication={true}>
+      <HomePage/>
+      </ProtectedRoute>
+
+      }
       />
 
     </Routes>
