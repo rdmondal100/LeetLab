@@ -5,7 +5,7 @@ import Footer from '../components/Footer'
 
 const RootLayout = () => {
   return (
-    <main>
+    <main className='flex flex-col w-full container'>
         <Navbar/>
         <Outlet/>
         <Footer/>
