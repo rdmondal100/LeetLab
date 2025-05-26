@@ -135,7 +135,7 @@ const RegisterPage = () => {
                     </div>
 				
                  
-                 <Button className="w-full" type='submit' disabled={isLoading}>
+                 <Button className="w-full cursor-pointer" type='submit' disabled={isLoading}>
   {isLoading ? (<div className="flex gap-1 justify-center items-center"><Loader2 className="animate-spin" size={18} />Registering..</div>) : ('Register')}
 </Button>
 
