@@ -66,7 +66,7 @@ const LoginPage = () => {
 			<div className='flex pb-5 flex-col gap-3 justify-center items-center '>
 				<div className='logo font-black text-2xl flex justify-center items-center gap-2'>
 					<Code size={35} className='font-extrabold text-4xl text-primary' />
-					<h1>LeetLab</h1>
+					<h1>DSA Battle</h1>
 				</div>
 				<div className='flex flex-col justify-center items-center'>
 					<h1 className=' font-bold text-[1.7rem]'>Wellcome Back</h1>
