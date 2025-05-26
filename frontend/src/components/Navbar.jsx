@@ -12,8 +12,12 @@ import {
 import { UserCircle, Search, } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avater";
+import { useSelector } from "react-redux";
+import { avaterPlaceholder } from "../assets";
 
 const Navbar = () => {
+    const authUser = useSelector((state)=>state.auth?.authUser?.data)
+    console.log(authUser)
 	return (
 		<nav className='w-full container bg-background px-6 py-3 flex items-center justify-between '>
 			{/* Left: Logo */}
@@ -28,7 +32,7 @@ const Navbar = () => {
 			</Link>
 
 			{/* Center: Menu */}
-			<div className='hidden md:flex gap-4 text-sm font-medium text-muted-foreground'>
+			<div className='hidden lg:flex gap-4 text-sm font-medium text-muted-foreground'>
 				<Button variant='ghost' className='hover:text-primary'>
 					Problems
 				</Button>
@@ -57,8 +61,8 @@ const Navbar = () => {
 				<DropdownMenu>
 					<DropdownMenuTrigger asChild>
                     <Avatar className="cursor-pointer">
-      <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-      <AvatarFallback>CN</AvatarFallback>
+      <AvatarImage src={authUser?.image} alt={authUser?.name} />
+      <AvatarFallback> <img src={avaterPlaceholder} alt={authUser?.name} /> </AvatarFallback>
     </Avatar>
 					</DropdownMenuTrigger>
 					<DropdownMenuContent align='end' className='w-40'>
