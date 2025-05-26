@@ -16,7 +16,7 @@ import { toast } from "sonner";
 
 import { Input } from "@/components/ui/input";
 
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { loginFormSchema } from "../../schemas/loginFormSchema";
 import { useLoginUserMutation } from "../../redux-toolkit/services/authService";
 
@@ -25,6 +25,8 @@ const LoginPage = () => {
 
 	const [loginUser, { isLoading, isSuccess, isError, error }] =
 		useLoginUserMutation();
+
+        const navigate = useNavigate();
 
 	// 1. Define your form.
 	const form = useForm({
@@ -46,11 +48,16 @@ const LoginPage = () => {
 			console.log(userData);
 			const response = await loginUser(userData).unwrap();
 
-			console.log("User Logged in:", response);
-			const successMessage =
-				response.data.message || "User Loggedin Successfully";
-			toast.success(successMessage);
-			form.reset();
+            if(response?.success){
+                console.log("User Logged in:", response);
+                navigate('/')
+                const successMessage =
+                    response.data.message || "User Loggedin Successfully";
+                toast.success(successMessage);
+
+                form.reset();
+            }
+		
 		} catch (err) {
 			console.error("Login failed:", err);
 
@@ -131,7 +138,7 @@ const LoginPage = () => {
 						{isLoading ? (
 							<div className='flex gap-1 justify-center items-center'>
 								<Loader2 className='animate-spin' size={18} />
-								Logingin..
+								Logging in..
 							</div>
 						) : (
 							"Login"
