@@ -69,7 +69,7 @@ const RegisterPage = () => {
 					<Code size={35} className='font-extrabold text-4xl text-primary' />
 					<h1>LeetLab</h1>
 				</div>
-				<div className=''>
+				<div className='flex flex-col justify-center items-center'>
 					<h1 className=' font-bold text-[1.7rem]'>Register Now</h1>
 					<p className='text-muted-foreground text-base'>
 						Create a free account
