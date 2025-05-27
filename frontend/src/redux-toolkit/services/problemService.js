@@ -26,11 +26,11 @@ export const problemApi = createApi({
 
         }),
 
-        getAuthUser: builder.query({
+        getAllProblems: builder.query({
             query:()=>({
-                url: "/auth/check"
+                url: "/problems//get-all-problems"
             }),
-            invalidatesTags: ['Auth']
+            invalidatesTags: ['Problem']
 
         }),
       
@@ -38,4 +38,4 @@ export const problemApi = createApi({
 })
 
 
-export const { useCreateNewProblemMutation } = problemApi
+export const { useCreateNewProblemMutation, useGetAllProblemsQuery } = problemApi
