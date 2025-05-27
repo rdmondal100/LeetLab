@@ -83,9 +83,11 @@ const Navbar = () => {
 							Profile
 						</DropdownMenuItem>
 						{authUser?.role === "ADMIN" && (
-							<DropdownMenuItem className='flex cursor-pointer items-center '>
-								<Code />
+							<DropdownMenuItem >
+                                <Link className='flex cursor-pointer items-center gap-1.5 ' to="/add-problem">
+                                <Code />
 								Add Problem
+                                </Link>
 							</DropdownMenuItem>
 						)}
 

@@ -7,6 +7,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 
 import { Toaster } from "@/components/ui/sonner";
 import RootLayout from "./layouts/RootLayout";
+import AdminOnlyRoute from "./components/AdminOnlyRoute";
+import AddProblemPage from "./pages/AddProblemPage";
 
 const App = () => {
 	return (
@@ -43,7 +45,20 @@ const App = () => {
 							</ProtectedRoute>
 						}
 					/>
+
+
+        {/* Admin routes */}
+        <Route element={<AdminOnlyRoute/>}>
+          <Route
+          path="/add-problem"
+          element={
+            <ProtectedRoute authentication={true}>
+              <AddProblemPage/>
+            </ProtectedRoute>
+          }/>
+        </Route>
 				</Route>
+
 			</Routes>
 		</div>
 	);
