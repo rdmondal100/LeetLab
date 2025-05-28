@@ -92,18 +92,7 @@ const problemValidator = () => {
 
     body('testcases')
       .isArray({ min: 1 })
-      .withMessage('Testcases must be an array with at least one item')
-      .custom((testcases) => {
-        for (const test of testcases) {
-          if (
-            typeof test.input !== 'string' ||
-            typeof test.output !== 'string'
-          ) {
-            throw new Error('Each testcase must have input and output strings');
-          }
-        }
-        return true;
-      }),
+      .withMessage('Testcases must be an array with at least one item'),
 
     body('codeSnippet')
       .isObject()
