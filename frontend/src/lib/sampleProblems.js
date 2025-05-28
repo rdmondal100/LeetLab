@@ -2,278 +2,191 @@
 
 
 export const sampledpData = {
-	title: "Climbing Stairs",
-	category: "dp", // Dynamic Programming
-	description:
-		"You are climbing a staircase. It takes n steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?",
-	difficulty: "EASY",
-	tags: ["Dynamic Programming", "Math", "Memoization"],
-	constraints: "1 <= n <= 45",
-	hints:
-		"To reach the nth step, you can either come from the (n-1)th step or the (n-2)th step.",
-	editorial:
-		"This is a classic dynamic programming problem. The number of ways to reach the nth step is the sum of the number of ways to reach the (n-1)th step and the (n-2)th step, forming a Fibonacci-like sequence.",
-	testcases: [
-		{
-			input: "2",
-			output: "2",
-		},
-		{
-			input: "3",
-			output: "3",
-		},
-		{
-			input: "4",
-			output: "5",
-		},
-	],
-	examples: {
-		JAVASCRIPT: {
-			input: "n = 2",
-			output: "2",
-			explanation:
-				"There are two ways to climb to the top:\n1. 1 step + 1 step\n2. 2 steps",
-		},
-		PYTHON: {
-			input: "n = 3",
-			output: "3",
-			explanation:
-				"There are three ways to climb to the top:\n1. 1 step + 1 step + 1 step\n2. 1 step + 2 steps\n3. 2 steps + 1 step",
-		},
-		CPP: {
-			input: "n = 4",
-			output: "5",
-			explanation:
-				"There are five ways to climb to the top:\n1. 1 step + 1 step + 1 step + 1 step\n2. 1 step + 1 step + 2 steps\n3. 1 step + 2 steps + 1 step\n4. 2 steps + 1 step + 1 step\n5. 2 steps + 2 steps",
-		},
-	},
-	codeSnippet: {
-		JAVASCRIPT: `/**
+  title: "Climbing Stairs",
+  category: "dp", // Dynamic Programming
+  description:
+    "You are climbing a staircase. It takes n steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?",
+  difficulty: "EASY",
+  tags: ["Dynamic Programming", "Math", "Memoization"],
+  constraints: "1 <= n <= 45",
+  hints:
+    "To reach the nth step, you can either come from the (n-1)th step or the (n-2)th step.",
+  editorial:
+    "This is a classic dynamic programming problem. The number of ways to reach the nth step is the sum of the number of ways to reach the (n-1)th step and the (n-2)th step, forming a Fibonacci-like sequence.",
+  testcases: [
+    { input: "1", output: "1" },
+    { input: "2", output: "2" },
+    { input: "3", output: "3" },
+    { input: "4", output: "5" },
+  ],
+  examples: {
+    JAVASCRIPT: {
+      input: "n = 2",
+      output: "2",
+      explanation:
+        "There are two ways to climb to the top:\n1. 1 step + 1 step\n2. 2 steps",
+    },
+    PYTHON: {
+      input: "n = 3",
+      output: "3",
+      explanation:
+        "There are three ways to climb to the top:\n1. 1 step + 1 step + 1 step\n2. 1 step + 2 steps\n3. 2 steps + 1 step",
+    },
+    CPP: {
+      input: "n = 4",
+      output: "5",
+      explanation:
+        "There are five ways to climb to the top:\n1. 1 step + 1 step + 1 step + 1 step\n2. 1 step + 1 step + 2 steps\n3. 1 step + 2 steps + 1 step\n4. 2 steps + 1 step + 1 step\n5. 2 steps + 2 steps",
+    },
+  },
+  codeSnippet: {
+    JAVASCRIPT: `
+    /**
 * @param {number} n
 * @return {number}
 */
 function climbStairs(n) {
-// Write your code here
+  // Your solution goes here
 }
 
-// Parse input and execute
-const readline = require('readline');
-const rl = readline.createInterface({
-input: process.stdin,
-output: process.stdout,
-terminal: false
+// Input parsing and execution
+let input = '';
+process.stdin.on('data', chunk => input += chunk);
+process.stdin.on('end', () => {
+  const n = parseInt(input.trim());
+  if (!isNaN(n)) {
+    console.log(climbStairs(n));
+  }
 });
+    `,
 
-rl.on('line', (line) => {
-const n = parseInt(line.trim());
-const result = climbStairs(n);
-
-console.log(result);
-rl.close();
-});`,
-		PYTHON: `class Solution:
+    PYTHON: `class Solution:
   def climbStairs(self, n: int) -> int:
-      # Write your code here
-      pass
+      #Your solution goes here
 
-# Input parsing
 if __name__ == "__main__":
   import sys
-  
-  # Parse input
   n = int(sys.stdin.readline().strip())
-  
-  # Solve
   sol = Solution()
-  result = sol.climbStairs(n)
-  
-  # Print result
-  print(result)`,
-		CPP: `#include <iostream>
+  print(sol.climbStairs(n))`,
+    CPP: `#include <iostream>
 using namespace std;
 
 class Solution {
 public:
     int climbStairs(int n) {
-        // Write your code here
-        return 0;
+    //your solution goes here
     }
 };
 
 int main() {
     int n;
     cin >> n;
-    
-    // Use Solution class instead of Main
+
     Solution sol;
-    int result = sol.climbStairs(n);
-    
-    // Print result
-    cout << result << endl;
-    
+    cout << sol.climbStairs(n) << endl;
     return 0;
 }`,
-	},
-	referenceSolution: {
-		JAVASCRIPT: `/**
-* @param {number} n
-* @return {number}
-*/
+  },
+  referenceSolution: {
+    JAVASCRIPT: `
 function climbStairs(n) {
-// Base cases
-if (n <= 2) {
-  return n;
-}
+  if (n <= 2) return n;
 
-// Dynamic programming approach
-let dp = new Array(n + 1);
-dp[1] = 1;
-dp[2] = 2;
-
-for (let i = 3; i <= n; i++) {
-  dp[i] = dp[i - 1] + dp[i - 2];
-}
-
-return dp[n];
+  let a = 1, b = 2;
+  for (let i = 3; i <= n; i++) {
+    const temp = a + b;
+    a = b;
+    b = temp;
   }
-
-/* Alternative approach with O(1) space
-let a = 1; // ways to climb 1 step
-let b = 2; // ways to climb 2 steps
-
-for (let i = 3; i <= n; i++) {
-  let temp = a + b;
-  a = b;
-  b = temp;
+  return b;
 }
 
-return n === 1 ? a : b;
-*/
-`,
-
-		PYTHON: `class Solution:
+// Input parsing and execution
+let input = '';
+process.stdin.on('data', chunk => input += chunk);
+process.stdin.on('end', () => {
+  const n = parseInt(input.trim());
+  if (!isNaN(n)) {
+    console.log(climbStairs(n));
+  }
+});
+    `,
+    PYTHON: `class Solution:
   def climbStairs(self, n: int) -> int:
-      # Base cases
       if n <= 2:
           return n
-      
-      # Dynamic programming approach
-      dp = [0] * (n + 1)
-      dp[1] = 1
-      dp[2] = 2
-      
-      for i in range(3, n + 1):
-          dp[i] = dp[i - 1] + dp[i - 2]
-      
-      return dp[n]
-      
-      # Alternative approach with O(1) space
-      # a, b = 1, 2
-      # 
-      # for i in range(3, n + 1):
-      #     a, b = b, a + b
-      # 
-      # return a if n == 1 else b
-}`,
-
-		CPP: `#include <iostream>
+      a, b = 1, 2
+      for _ in range(3, n + 1):
+          a, b = b, a + b
+      return b`,
+    CPP: `#include <iostream>
 using namespace std;
 
 class Solution {
 public:
     int climbStairs(int n) {
-        // Base cases
-        if (n <= 2) {
-            return n;
-        }
-        
-        // Dynamic programming approach
-        int dp[n + 1];
-        dp[1] = 1;
-        dp[2] = 2;
-        
-        for (int i = 3; i <= n; i++) {
-            dp[i] = dp[i - 1] + dp[i - 2];
-        }
-        
-        return dp[n];
-        
-        /* Alternative approach with O(1) space
-        int a = 1; // ways to climb 1 step
-        int b = 2; // ways to climb 2 steps
-        
-        for (int i = 3; i <= n; i++) {
+        if (n <= 2) return n;
+        int a = 1, b = 2;
+        for (int i = 3; i <= n; ++i) {
             int temp = a + b;
             a = b;
             b = temp;
         }
-        
-        return n == 1 ? a : b;
-        */
+        return b;
     }
+};`,
+  },
 };
 
-int main() {
-    int n;
-    cin >> n;
-    
-    // Use Solution class instead of Main
-    Solution sol;
-    int result = sol.climbStairs(n);
-    
-    // Print result
-    cout << result << endl;
-    
-    return 0;
-}`,
-	},
-};
+
+
 
 export const sampleStringProblem = {
-	title: "Valid Palindrome",
-	description:
-		"A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers. Given a string s, return true if it is a palindrome, or false otherwise.",
-	difficulty: "EASY",
-	tags: ["String", "Two Pointers"],
-	constraints:
-		"1 <= s.length <= 2 * 10^5\ns consists only of printable ASCII characters.",
-	hints:
-		"Consider using two pointers, one from the start and one from the end, moving towards the center.",
-	editorial:
-		"We can use two pointers approach to check if the string is a palindrome. One pointer starts from the beginning and the other from the end, moving towards each other.",
-	testcases: [
-		{
-			input: "A man, a plan, a canal: Panama",
-			output: "true",
-		},
-		{
-			input: "race a car",
-			output: "false",
-		},
-		{
-			input: " ",
-			output: "true",
-		},
-	],
-	examples: {
-		JAVASCRIPT: {
-			input: 's = "A man, a plan, a canal: Panama"',
-			output: "true",
-			explanation: '"amanaplanacanalpanama" is a palindrome.',
-		},
-		PYTHON: {
-			input: 's = "A man, a plan, a canal: Panama"',
-			output: "true",
-			explanation: '"amanaplanacanalpanama" is a palindrome.',
-		},
-		CPP: {
-			input: 's = "A man, a plan, a canal: Panama"',
-			output: "true",
-			explanation: '"amanaplanacanalpanama" is a palindrome.',
-		},
-	},
-	codeSnippet: {
-		JAVASCRIPT: `/**
+  title: "Valid Palindrome",
+  description:
+    "A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers. Given a string s, return true if it is a palindrome, or false otherwise.",
+  difficulty: "EASY",
+  tags: ["String", "Two Pointers"],
+  constraints:
+    "1 <= s.length <= 2 * 10^5\ns consists only of printable ASCII characters.",
+  hints:
+    "Consider using two pointers, one from the start and one from the end, moving towards the center.",
+  editorial:
+    "We can use two pointers approach to check if the string is a palindrome. One pointer starts from the beginning and the other from the end, moving towards each other.",
+  testcases: [
+    {
+      input: "A man, a plan, a canal: Panama",
+      output: "true",
+    },
+    {
+      input: "race a car",
+      output: "false",
+    },
+    {
+      input: " ",
+      output: "true",
+    },
+  ],
+  examples: {
+    JAVASCRIPT: {
+      input: 's = "A man, a plan, a canal: Panama"',
+      output: "true",
+      explanation: '"amanaplanacanalpanama" is a palindrome.',
+    },
+    PYTHON: {
+      input: 's = "A man, a plan, a canal: Panama"',
+      output: "true",
+      explanation: '"amanaplanacanalpanama" is a palindrome.',
+    },
+    CPP: {
+      input: 's = "A man, a plan, a canal: Panama"',
+      output: "true",
+      explanation: '"amanaplanacanalpanama" is a palindrome.',
+    },
+  },
+  codeSnippet: {
+    JAVASCRIPT: `/**
  * @param {string} s
  * @return {boolean}
  */
@@ -295,7 +208,7 @@ rl.on('line', (line) => {
   console.log(result ? "true" : "false");
   rl.close();
 });`,
-		PYTHON: `class Solution:
+    PYTHON: `class Solution:
   def isPalindrome(self, s: str) -> bool:
       # Write your code here
       pass
@@ -307,7 +220,7 @@ if __name__ == "__main__":
   sol = Solution()
   result = sol.isPalindrome(s)
   print(str(result).lower())`,
-		CPP: `#include <iostream>
+    CPP: `#include <iostream>
 #include <string>
 #include <cctype>
 using namespace std;
@@ -331,9 +244,9 @@ int main() {
     cout << (isPalindrome(s) ? "true" : "false") << endl;
     return 0;
 }`,
-	},
-	referenceSolution: {
-		JAVASCRIPT: `/**
+  },
+  referenceSolution: {
+    JAVASCRIPT: `/**
  * @param {string} s
  * @return {boolean}
  */
@@ -360,7 +273,7 @@ rl.on('line', (line) => {
   console.log(result ? "true" : "false");
   rl.close();
 });`,
-		PYTHON: `class Solution:
+    PYTHON: `class Solution:
   def isPalindrome(self, s: str) -> bool:
       filtered = [c.lower() for c in s if c.isalnum()]
       return filtered == filtered[::-1]
@@ -371,7 +284,7 @@ if __name__ == "__main__":
   sol = Solution()
   result = sol.isPalindrome(s)
   print(str(result).lower())`,
-		CPP: `#include <iostream>
+    CPP: `#include <iostream>
 #include <string>
 #include <cctype>
 using namespace std;
@@ -395,5 +308,5 @@ int main() {
     cout << (isPalindrome(s) ? "true" : "false") << endl;
     return 0;
 }`,
-	},
+  },
 };
