@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useForm, useFieldArray } from "react-hook-form";
 import CodeEditor from "./CodeEditor";
-import { CheckCircle2, Download, FileText, Trash2 } from "lucide-react";
+import { CheckCircle2, Download, FileText, Loader, Loader2, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
@@ -27,39 +27,43 @@ import {
 } from "@/components/ui/select";
 import { Editor } from "@monaco-editor/react";
 import { sampledpData, sampleStringProblem } from "../lib/sampleProblems";
-
+import { useCreateNewProblemMutation } from '../redux-toolkit/services/problemService'
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const CreateProblemForm = () => {
 	const [sampleType, setSampleType] = useState("DP");
-
+    const [createNewProblem,{isLoading}] = useCreateNewProblemMutation()
+	const navigate = useNavigate()
   // 1. Define your form.
+    const defaultProblemValues =  {
+		title: "",
+		description: "",
+		difficulty: "",
+		tags: [""],
+		examples: {
+			JAVASCRIPT: { input: "", output: "", explanation: "" },
+			PYTHON: { input: "", output: "", explanation: "" },
+			CPP: { input: "", output: "", explanation: "" },
+		},
+		constraints: "",
+		hints: "",
+		editorial: "",
+		testcases: [{ input: "", output: "" }],
+		codeSnippet: {
+			JAVASCRIPT: `function solution() {\n  // Write your code here\n}`,
+			PYTHON: `def solution():\n  # Write your code here\n  pass`,
+			CPP: `void solution() {\n  // Write your code here\n}`,
+		},
+		referenceSolution: {
+			JAVASCRIPT: "//Add your reference solution here",
+			PYTHON: "# Add your reference solution here",
+			CPP: "// Add your reference solution here",
+		},
+	}
 	const form = useForm({
 		resolver: zodResolver(createProblemFormSchema),
-		defaultValues: {
-			title: "",
-			description: "",
-			difficulty: "",
-			tags: [""],
-			examples: {
-				JAVASCRIPT: { input: "", output: "", explanation: "" },
-				PYTHON: { input: "", output: "", explanation: "" },
-				CPP: { input: "", output: "", explanation: "" },
-			},
-			constraints: "",
-			hints: "",
-			editorial: "",
-			testcases: [{ input: "", output: "" }],
-			codeSnippet: {
-				JAVASCRIPT: `function solution() {\n  // Write your code here\n}`,
-				PYTHON: `def solution():\n  # Write your code here\n  pass`,
-				CPP: `void solution() {\n  // Write your code here\n}`,
-			},
-			referenceSolution: {
-				JAVASCRIPT: "//Add your reference solution here",
-				PYTHON: "# Add your reference solution here",
-				CPP: "// Add your reference solution here",
-			},
-		},
+		defaultValues: defaultProblemValues,
 	});
 
 	const {
@@ -90,11 +94,25 @@ const CreateProblemForm = () => {
 	});
 
 	// 2. Define a submit handler.
-	function onSubmit(values) {
+	const onSubmit= async(values) =>{
 		// Do something with the form values.
 		// ✅ This will be type-safe and validated.
     console.log("Form submited")
 		console.log(values);
+		try {
+			const response = await createNewProblem(values).unwrap()
+			console.log(response)
+			if(response?.success){
+				const successMessage = response?.data?.message || "New problem created successfully"
+				toast.success(successMessage)
+				form.reset(defaultProblemValues);
+			}
+			
+		} catch (err) {
+			const errorMessage = err?.data?.message || "Failed to create the problem"
+			console.error(err)
+			toast.error(errorMessage)
+		}
 	}
 
 	const loadSampleData = () => {
@@ -442,12 +460,15 @@ const CreateProblemForm = () => {
 
 							<div className='flex justify-end pt-6 border-t mt-6'>
 								<Button
+								disabled={isLoading}
 						type='submit'
             size='lg'
-									className='gap-2'
+									className='px-3 transition-all duration-300 ease-in-out'
 								>
 									{isLoading ? (
-										<span className='animate-spin h-5 w-5 border-2 border-foreground border-t-transparent rounded-full' />
+										<div className="flex justify-center items-center gap-1">
+											<Loader2 className="animate-spin"/>Creating Problem
+										</div>
 									) : (
 										<>
 											<CheckCircle2 className='w-5 h-5' />
