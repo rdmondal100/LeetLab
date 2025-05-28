@@ -4,7 +4,7 @@ import { asyncHandler } from "./async-handler.js"
 export const getJudge0LanguageId = (languageName) => {
     const languageMap = {
         "PYTHON": 71,
-        "JAVA": 62,
+        "C++": 10,
         "JAVASCRIPT": 63
     }
     return languageMap[languageName.toUpperCase()]
@@ -62,7 +62,7 @@ export const getLanguageName = (langId)=>{
     const  LANGUAGE_NAMES = {
         63:"JavaScript",
         71: "Python",
-        62: "Java"
+        10: "C++"
     }
 
     return LANGUAGE_NAMES[langId]

@@ -2,7 +2,7 @@
 export const suportedLanguages = {
     63:"JavaScript",
     71: "Python",
-    62: "Java"
+    10: "C++"
 }
 
 export const supportedLanguagesId = Object.keys(suportedLanguages).map(Number)
