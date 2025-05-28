@@ -11,7 +11,7 @@ export const problemApi = createApi({
         prepareHeaders: (headers) => {
             headers.set('Content-Type', 'application/json')
             return headers
-          }
+        }
     }),
     tagTypes: ['Problem'],
 
@@ -27,13 +27,25 @@ export const problemApi = createApi({
         }),
 
         getAllProblems: builder.query({
-            query:()=>({
+            query: () => ({
                 url: "/problems//get-all-problems"
             }),
             invalidatesTags: ['Problem']
 
         }),
-      
+        getProblemById: builder.query({
+            query: (id) => ({
+                url: `/problems//get-problem/${id}`
+            }),
+            invalidatesTags: ['Problem']
+        }),
+        getAllProblemSolvedByAuthUser: builder.query({
+            query: (id) => ({
+                url: `/problems//get-solved-problems`
+            }),
+            invalidatesTags: ['Problem']
+        }),
+
     }),
 })
 
