@@ -3,7 +3,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-    allProblems: null,
+    allProblems: [],
+    problem: null,
+    allSolvedProblems:[]
 }
 
 export const problemSlice = createSlice({
@@ -12,13 +14,21 @@ export const problemSlice = createSlice({
     reducers: {
         setAllProblems: (state, action) => {
             state.allProblems = action.payload;
-        }
+        },
+        setProblem: (state, action) => {
+            state.problem = action.payload;
+        },
+        setAllSolvedProblems: (state, action) => {
+            state.allSolvedProblems = action.payload;
+        },
     },
 })
 
 
 export const { 
     setAllProblems,
+    setProblem,
+    setAllSolvedProblems
 
 } = problemSlice.actions
 
