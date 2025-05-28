@@ -28,20 +28,20 @@ export const problemApi = createApi({
 
         getAllProblems: builder.query({
             query: () => ({
-                url: "/problems//get-all-problems"
+                url: "/problems/get-all-problems"
             }),
             invalidatesTags: ['Problem']
 
         }),
         getProblemById: builder.query({
             query: (id) => ({
-                url: `/problems//get-problem/${id}`
+                url: `/problems/get-problem/${id}`
             }),
             invalidatesTags: ['Problem']
         }),
         getAllProblemSolvedByAuthUser: builder.query({
             query: (id) => ({
-                url: `/problems//get-solved-problems`
+                url: `/problems/get-solved-problems`
             }),
             invalidatesTags: ['Problem']
         }),
