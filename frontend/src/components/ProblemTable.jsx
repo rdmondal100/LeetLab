@@ -35,9 +35,9 @@ import {
               const isSolved = problem.solvedBy?.includes(currentUserId);
               return (
                 <TableRow
-                  key={problem.id}
+                  key={problem?.id}
                   className="cursor-pointer hover:bg-muted/50"
-                  onClick={() => navigate(`/problems/${problem._id}`)}
+                  onClick={() => navigate(`/problems/${problem?.id}`)}
                 >
                   <TableCell>{idx + 1}</TableCell>
                   <TableCell className="font-medium">{problem.title}</TableCell>
