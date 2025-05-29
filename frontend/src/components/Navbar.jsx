@@ -32,18 +32,18 @@ const Navbar = () => {
 			</Link>
 
 			<div className='hidden lg:flex gap-4 text-sm font-medium text-muted-foreground'>
-				<Button variant='ghost' className='hover:text-primary'>
+				<Link  to="/problems" className='hover:text-primary'>
 					Problems
-				</Button>
-				<Button variant='ghost' className='hover:text-primary'>
+				</Link>
+				<Link  to="contests" className='hover:text-primary'>
 					Contests
-				</Button>
-				<Button variant='ghost' className='hover:text-primary'>
+				</Link>
+				<Link  to="discuss" className='hover:text-primary'>
 					Discuss
-				</Button>
-				<Button variant='ghost' className='hover:text-primary'>
+				</Link>
+				<Link  to="battle" className='hover:text-primary'>
 					Battle
-				</Button>
+				</Link>
 			</div>
 
 			<div className='flex items-center gap-2'>
