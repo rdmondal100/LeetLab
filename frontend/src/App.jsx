@@ -9,6 +9,7 @@ import { Toaster } from "@/components/ui/sonner";
 import RootLayout from "./layouts/RootLayout";
 import AdminOnlyRoute from "./components/AdminOnlyRoute";
 import AddProblemPage from "./pages/AddProblemPage";
+import ProblemsDisplayPage from "./pages/ProblemsDisplayPage";
 
 const App = () => {
 	return (
@@ -45,20 +46,27 @@ const App = () => {
 							</ProtectedRoute>
 						}
 					/>
+					<Route
+					path="/problems"
+					element={
+						<ProtectedRoute authentication={true}>
+							<ProblemsDisplayPage/>
+						</ProtectedRoute>
+					}
+					/>
 
-
-        {/* Admin routes */}
-        <Route element={<AdminOnlyRoute/>}>
-          <Route
-          path="/add-problem"
-          element={
-            <ProtectedRoute authentication={true}>
-              <AddProblemPage/>
-            </ProtectedRoute>
-          }/>
-        </Route>
+					{/* Admin routes */}
+					<Route element={<AdminOnlyRoute />}>
+						<Route
+							path='/add-problem'
+							element={
+								<ProtectedRoute authentication={true}>
+									<AddProblemPage />
+								</ProtectedRoute>
+							}
+						/>
+					</Route>
 				</Route>
-
 			</Routes>
 		</div>
 	);
