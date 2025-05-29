@@ -3,6 +3,7 @@ import { useGetAuthUserQuery } from "../redux-toolkit/services/authService";
 import { useDispatch } from "react-redux";
 import { setAuthUser } from "../redux-toolkit/features/authSlice";
 import { Navigate } from "react-router-dom";
+import { Loader2 } from "lucide-react";
 
 const ProtectedRoute = ({ children, authentication = true }) => {
 	const [authChecked, setAuthChecked] = useState(false);
@@ -29,7 +30,9 @@ const ProtectedRoute = ({ children, authentication = true }) => {
 	}, [authUser, isLoading, isFetching]);
 
 	if (!authChecked) {
-		return <p>Loading...</p>;
+		return (<div className="flex justify-center items-center gap-2 text-3xl font-bold">
+        <Loader2 className="animate-spin" /> Loading...
+      </div>)
 	}
 
 	if (authentication && !authUser?.success) {
