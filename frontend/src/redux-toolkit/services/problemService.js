@@ -50,4 +50,4 @@ export const problemApi = createApi({
 })
 
 
-export const { useCreateNewProblemMutation, useGetAllProblemsQuery } = problemApi
+export const { useCreateNewProblemMutation, useGetAllProblemsQuery, useGetProblemByIdQuery } = problemApi
