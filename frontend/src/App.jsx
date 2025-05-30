@@ -10,6 +10,7 @@ import RootLayout from "./layouts/RootLayout";
 import AdminOnlyRoute from "./components/AdminOnlyRoute";
 import AddProblemPage from "./pages/AddProblemPage";
 import ProblemsDisplayPage from "./pages/ProblemsDisplayPage";
+import SingleProblemDetailsPage from "./pages/SingleProblemDetailsPage";
 
 const App = () => {
 	return (
@@ -67,6 +68,17 @@ const App = () => {
 						/>
 					</Route>
 				</Route>
+
+				{/* Single problem details page */}
+				
+				<Route
+					path="/problems/:id"
+					element={
+						<ProtectedRoute authentication={true}>
+							<SingleProblemDetailsPage/>
+						</ProtectedRoute>
+					}
+					/>
 			</Routes>
 		</div>
 	);
