@@ -34,20 +34,42 @@ import {
 	Terminal,
 } from "lucide-react";
 import CodeExecutor from "../components/CodeExecutor";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Button } from "../components/ui/button";
 import ProblemDescriptionPanel from "../components/ProblemDescriptionPanel";
 import ProblemCodeEditorPannel from "../components/ProblemCodeEditorPannel";
 import ProblemTestCasesPanel from "../components/ProblemTestCasesPanel";
+import { useGetProblemByIdQuery } from "../redux-toolkit/services/problemService";
+import { toast } from "sonner";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentProblem } from "../redux-toolkit/features/problemSlice";
 
 export default function SingleProblemDetailsPage() {
-	const [activeView, setActiveView] = useState("test-cases");
-	const [testCases, setTestCases] = useState([
-		{ input: "[2, 7, 11, 15]\n9", output: "[0, 1]" },
-	]);
 	const [activeTab, setActiveTab] = useState("0");
 	const [isSmallScreen, setIsSmallScreen] = useState(false);
 
+	const { id } = useParams();
+	const currentProblem = useSelector((state)=>state.problem.currentProblem)
+    console.log(currentProblem)
+	const {
+		data: currentProblemFromApi,
+		isLoading,
+		error,
+	} = useGetProblemByIdQuery(id);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		if (currentProblemFromApi?.success) {
+			dispatch(setCurrentProblem(currentProblemFromApi?.data));
+		}
+		if (error) {
+			console.log(error);
+			toast.error("Failed to get Problem Data, Try again!");
+		}
+	}, [currentProblemFromApi, error, dispatch]);
+
+
+	
 	useEffect(() => {
 		const checkSize = () => setIsSmallScreen(window.innerWidth < 768);
 		checkSize();
@@ -55,10 +77,8 @@ export default function SingleProblemDetailsPage() {
 		return () => window.removeEventListener("resize", checkSize);
 	}, []);
 
-	
-
 	return (
-		<div className='min-h-screen md:w-screen flex flex-col'>
+		<div className='min-h-screen md:h-screen md:w-screen flex flex-col'>
 			<div className='flex justify-between items-center p-4 border-b bg-background'>
 				{/* Left side: Logo + Nav Buttons */}
 				<div className='flex items-center gap-1'>
@@ -71,7 +91,7 @@ export default function SingleProblemDetailsPage() {
 					</Link>{" "}
 					<Minus className=' rotate-90 text-muted' />
 					<div className='flex gap-3'>
-						<Link className=' hover:text-primary flex justify-center items-center gap-1'>
+						<Link to="/problems" className=' hover:text-primary flex justify-center items-center gap-1'>
 							<ExternalLink /> ProblemList
 						</Link>
 						<Button
@@ -99,16 +119,16 @@ export default function SingleProblemDetailsPage() {
 			{isSmallScreen ? (
 				<div className='flex flex-col flex-1 overflow-auto'>
 					<div className=' border-2 rounded-lg bg-card flex flex-col flex-1'>
-						<ProblemDescriptionPanel />
+						<ProblemDescriptionPanel currentProblem={currentProblem} />
 					</div>
 					<div className=' flex flex-col flex-1'>
 						<div className='flex flex-col h-full'>
 							<div className='border-2 rounded-lg bg-card m-1 flex flex-col'>
-								<div className="min-h-[400px]">
-									<ProblemCodeEditorPannel />
+								<div className='min-h-[400px]'>
+									<ProblemCodeEditorPannel currentProblem={currentProblem} />
 								</div>
-								<div className="">
-									<ProblemTestCasesPanel />
+								<div className=''>
+									<ProblemTestCasesPanel currentProblem={currentProblem} />
 								</div>
 							</div>
 						</div>
@@ -121,7 +141,7 @@ export default function SingleProblemDetailsPage() {
 						defaultSize={50}
 						minSize={40}
 					>
-						<ProblemDescriptionPanel />
+						<ProblemDescriptionPanel currentProblem={currentProblem} />
 					</ResizablePanel>
 
 					<ResizableHandle withHandle />
@@ -137,7 +157,7 @@ export default function SingleProblemDetailsPage() {
 								defaultSize={70}
 								minSize={30}
 							>
-								<ProblemCodeEditorPannel />
+								<ProblemCodeEditorPannel currentProblem={currentProblem} />
 							</ResizablePanel>
 
 							<ResizableHandle withHandle />
@@ -147,7 +167,7 @@ export default function SingleProblemDetailsPage() {
 								defaultSize={30}
 								minSize={30}
 							>
-								<ProblemTestCasesPanel />
+								<ProblemTestCasesPanel currentProblem={currentProblem} />
 							</ResizablePanel>
 						</ResizablePanelGroup>
 					</ResizablePanel>
