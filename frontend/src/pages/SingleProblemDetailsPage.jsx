@@ -283,7 +283,7 @@ export default function SingleProblemDetailsPage() {
 	);
 
 	return (
-		<div className='min-h-screen flex flex-col'>
+		<div className='min-h-screen md:w-screen flex flex-col'>
 			<div className='flex justify-between items-center p-4 border-b bg-background'>
 				{/* Left side: Logo + Nav Buttons */}
 				<div className='flex items-center gap-1'>
@@ -323,10 +323,10 @@ export default function SingleProblemDetailsPage() {
 
 			{isSmallScreen ? (
 				<div className='flex flex-col flex-1 overflow-auto'>
-					<div className='m-1 border-2 rounded-lg bg-card flex flex-col flex-1'>
+					<div className=' border-2 rounded-lg bg-card flex flex-col flex-1'>
 						<DescriptionPanel />
 					</div>
-					<div className='m-1 flex flex-col flex-1'>
+					<div className=' flex flex-col flex-1'>
 						<CodeAndTestCases />
 					</div>
 				</div>
