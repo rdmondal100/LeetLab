@@ -1,5 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@plugin 'tailwind-scrollbar' {
+  nocompatible: true;
+}
 
 @custom-variant dark (&:is(.dark *));
 
@@ -120,3 +123,4 @@
     @apply bg-background text-foreground;
   }
 }
+
