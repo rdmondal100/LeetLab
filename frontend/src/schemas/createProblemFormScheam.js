@@ -9,23 +9,15 @@ export const createProblemFormSchema = z.object({
     difficulty: DifficultyEnum,
     tags: z.array(z.string()).min(1, "At least one tag is required"),
 
-    examples: z.object({
-        JAVASCRIPT: z.object({
+    examples:  z
+    .array(
+        z.object({
             input: z.string().min(1,"Input is required"),
             output: z.string().min(1,"Output is required"),
-            explanation: z.string().optional()
-        }),
-        PYTHON: z.object({
-            input: z.string().min(1,"Input is required"),
-            output: z.string().min(1,"Output is required"),
-            explanation: z.string().optional()
-        }),
-        CPP: z.object({
-            input: z.string().min(1,"Input is required"),
-            output: z.string().min(1,"Output is required"),
-            explanation: z.string().optional()
-        }),
-    }),
+            explanation: z.string().min(1,"Explanation is required")
+        })
+    )
+    .min(1, "At least one example is required"),
     constraints: z.string().min(1, "Constraints are required"),
 
     hints: z.string().optional(),

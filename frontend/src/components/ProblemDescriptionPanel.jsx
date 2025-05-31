@@ -5,10 +5,10 @@ import { Card, CardContent } from "@/components/ui/card";
 const ProblemDescriptionPanel = ({ currentProblem }) => {
   const renderExamples = () => {
     if (!currentProblem?.examples) return null;
-
-    return Object.entries(currentProblem.examples).map(([lang, example], idx) => (
+	console.log(currentProblem?.examples)
+    return currentProblem?.examples?.map(( example, idx) => (
       <div key={idx}>
-        <p className="font-semibold">Example ({lang}):</p>
+        <p className="font-semibold py-2">Example - {idx}:</p>
         <pre className="bg-muted p-3 rounded text-xs whitespace-pre-wrap">
           Input: {example.input}{"\n"}
           Output: {example.output}
@@ -21,7 +21,6 @@ const ProblemDescriptionPanel = ({ currentProblem }) => {
   const renderConstraints = () => {
     if (!currentProblem?.constraints) return null;
 
-    // Split constraints string into separate points by line breaks or periods
     const constraintsList = currentProblem.constraints.split(/[\n.]+/).filter(Boolean);
 
     return (

@@ -19,26 +19,26 @@ export const sampledpData = {
     { input: "3", output: "3" },
     { input: "4", output: "5" },
   ],
-  examples: {
-    JAVASCRIPT: {
+  examples: [
+ {
       input: "n = 2",
       output: "2",
       explanation:
         "There are two ways to climb to the top:\n1. 1 step + 1 step\n2. 2 steps",
     },
-    PYTHON: {
+{
       input: "n = 3",
       output: "3",
       explanation:
         "There are three ways to climb to the top:\n1. 1 step + 1 step + 1 step\n2. 1 step + 2 steps\n3. 2 steps + 1 step",
     },
-    CPP: {
+{
       input: "n = 4",
       output: "5",
       explanation:
         "There are five ways to climb to the top:\n1. 1 step + 1 step + 1 step + 1 step\n2. 1 step + 1 step + 2 steps\n3. 1 step + 2 steps + 1 step\n4. 2 steps + 1 step + 1 step\n5. 2 steps + 2 steps",
     },
-  },
+  ],
   codeSnippet: {
     JAVASCRIPT: `
     /**
@@ -168,23 +168,19 @@ export const sampleStringProblem = {
       output: "true",
     },
   ],
-  examples: {
-    JAVASCRIPT: {
+  examples: [
+    {
       input: 's = "A man, a plan, a canal: Panama"',
       output: "true",
       explanation: '"amanaplanacanalpanama" is a palindrome.',
     },
-    PYTHON: {
-      input: 's = "A man, a plan, a canal: Panama"',
+
+    {
+      input: 's = "Riday"',
       output: "true",
-      explanation: '"amanaplanacanalpanama" is a palindrome.',
+      explanation: '"yadiR" is a palindrome.',
     },
-    CPP: {
-      input: 's = "A man, a plan, a canal: Panama"',
-      output: "true",
-      explanation: '"amanaplanacanalpanama" is a palindrome.',
-    },
-  },
+  ],
   codeSnippet: {
     JAVASCRIPT: `/**
  * @param {string} s

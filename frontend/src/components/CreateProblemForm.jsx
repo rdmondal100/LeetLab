@@ -41,11 +41,9 @@ const CreateProblemForm = () => {
 		description: "",
 		difficulty: "",
 		tags: [""],
-		examples: {
-			JAVASCRIPT: { input: "", output: "", explanation: "" },
-			PYTHON: { input: "", output: "", explanation: "" },
-			CPP: { input: "", output: "", explanation: "" },
-		},
+		examples: [
+	 { input: "", output: "", explanation: "" },
+	],
 		constraints: "",
 		hints: "",
 		editorial: "",
@@ -81,6 +79,16 @@ const CreateProblemForm = () => {
 	} = useFieldArray({
 		control,
 		name: "testcases",
+	});
+
+	const {
+		fields: exampleFields,
+		append: appendExample,
+		remove: removeExample,
+		replace: replaceexamples,
+	} = useFieldArray({
+		control,
+		name: "examples",
 	});
 
 	const {
@@ -361,13 +369,40 @@ const CreateProblemForm = () => {
 								</div>
 							))}
 
-							{["JAVASCRIPT", "PYTHON", "CPP"].map((language) => (
-								<div key={language} className='space-y-4 border p-4 rounded-md'>
-									<h4 className='text-lg font-semibold'>{language==="CPP"?"C++":language} Example</h4>
+								{/* Examples */}
+								<div className='space-y-4'>
+								<div className='flex justify-between items-center'>
+									<h3 className='text-lg font-semibold'>Examples</h3>
+									<Button
+										type='button'
+										onClick={() => appendExample({ input: "", output: "", explanation:"" })}
+									>
+										Add New Example
+									</Button>
+								</div>
+
+								{exampleFields.map((field, index) => (
+									<div
+										key={field.id}
+										className='border p-4 rounded-md space-y-4'
+									>
+										<div className='flex justify-between'>
+											<p className='font-medium'>Example #{index + 1}</p>
+											<Button
+												type='button'
+												variant='destructive'
+												size='sm'
+												onClick={() => removeExample(index)}
+												disabled={exampleFields.length === 1}
+											>
+												Remove
+											</Button>
+										</div>
+										
 
 									<FormField
 										control={form.control}
-										name={`examples.${language}.input`}
+										name={`examples.${index}.input`}
 										render={({ field }) => (
 											<FormItem>
 												<FormLabel>Input</FormLabel>
@@ -381,7 +416,7 @@ const CreateProblemForm = () => {
 
 									<FormField
 										control={form.control}
-										name={`examples.${language}.output`}
+										name={`examples.${index}.output`}
 										render={({ field }) => (
 											<FormItem>
 												<FormLabel>Output</FormLabel>
@@ -395,7 +430,7 @@ const CreateProblemForm = () => {
 
 									<FormField
 										control={form.control}
-										name={`examples.${language}.explanation`}
+										name={`examples.${index}.explanation`}
 										render={({ field }) => (
 											<FormItem>
 												<FormLabel>Explanation</FormLabel>
@@ -409,8 +444,11 @@ const CreateProblemForm = () => {
 											</FormItem>
 										)}
 									/>
-								</div>
-							))}
+
+
+									</div>
+								))}
+							</div>
 
 							{/* Additional Information */}
 							<div className='space-y-4'>
