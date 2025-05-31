@@ -1,5 +1,6 @@
 import axios from "axios"
 import { asyncHandler } from "./async-handler.js"
+import { ApiError } from "../utils/api-error.js";
 
 export const getJudge0LanguageId = (languageName) => {
     const languageMap = {

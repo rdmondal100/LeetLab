@@ -73,8 +73,8 @@ const problemValidator = () => {
       .withMessage('Tags must be an array with at least one tag'),
 
     body('examples')
-      .isObject()
-      .withMessage('Examples must be a valid JSON object'),
+    .isArray({ min: 1 })
+    .withMessage('Examples must be an array with at least one item'),
 
     body('constraints')
       .notEmpty()
