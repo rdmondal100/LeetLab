@@ -4,7 +4,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     allProblems: [],
-    problem: null,
+    currentProblem: null,
     allSolvedProblems:[]
 }
 
@@ -15,8 +15,8 @@ export const problemSlice = createSlice({
         setAllProblems: (state, action) => {
             state.allProblems = action.payload;
         },
-        setProblem: (state, action) => {
-            state.problem = action.payload;
+        setCurrentProblem: (state, action) => {
+            state.currentProblem = action.payload;
         },
         setAllSolvedProblems: (state, action) => {
             state.allSolvedProblems = action.payload;
@@ -27,7 +27,7 @@ export const problemSlice = createSlice({
 
 export const { 
     setAllProblems,
-    setProblem,
+    setCurrentProblem,
     setAllSolvedProblems
 
 } = problemSlice.actions
