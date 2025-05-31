@@ -14,7 +14,7 @@ const ProtectedRoute = ({ children, authentication = true }) => {
 		isLoading,
 		error,
 	} = useGetAuthUserQuery();
-	console.log(authUser);
+
 	const dispatch = useDispatch();
 
 	useEffect(() => {
