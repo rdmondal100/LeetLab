@@ -15,3 +15,17 @@ export const getAvatarFallBackName = (fullname)=>{
       return firstLatter.trim()+lastLatter.trim()
   }
 }
+
+
+
+
+export const getLanguageId = (languageName)=>{
+  const supportedLanguase =  {
+      "JavaScript":63,
+       "Python":71,
+      "C++":10
+  }
+  return supportedLanguase[languageName]
+}
+
+

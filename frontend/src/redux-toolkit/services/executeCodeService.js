@@ -17,7 +17,7 @@ export const executeCodeApi = createApi({
 
     endpoints: (builder) => ({
         runCurrentProblem: builder.mutation({
-            query: (newProblemData) => ({
+            query: (currentProblemData) => ({
                 url: '/execute-code/run-code',
                 method: "POST",
                 body: currentProblemData

@@ -9,11 +9,20 @@ const ProblemDescriptionPanel = ({ currentProblem }) => {
     return currentProblem?.examples?.map(( example, idx) => (
       <div key={idx}>
         <p className="font-semibold py-2">Example - {idx}:</p>
-        <pre className="bg-muted p-3 rounded text-xs whitespace-pre-wrap">
-          Input: {example.input}{"\n"}
+        <div className=" flex flex-col gap-2 ">
+			<pre className='bg-muted p-3 rounded text-xs whitespace-pre-wrap'>
+			Input: {example.input}{"\n"}
+
+			</pre>
+			<pre className='bg-muted p-3 rounded text-xs whitespace-pre-wrap'>
           Output: {example.output}
+		  </pre>
+		  <pre className='bg-muted p-3 rounded text-xs whitespace-pre-wrap'>
+
           {example.explanation ? `\nExplanation: ${example.explanation}` : ""}
-        </pre>
+		  </pre>
+
+        </div>
       </div>
     ));
   };
