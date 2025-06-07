@@ -1,8 +1,15 @@
 import React from 'react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
+import SubmissionsList from './SubmissionsList';
+import Submissions from './Submissions';
+import { useDispatch, useSelector } from 'react-redux';
+import { setActiveTab } from '../redux-toolkit/features/problemSlice';
 
 const ProblemDescriptionPanel = ({ currentProblem }) => {
+ const dispatch = useDispatch();
+  const activeTab = useSelector((state) => state.problem.activeTab);
+
   const renderExamples = () => {
     if (!currentProblem?.examples) return null;
 	console.log(currentProblem?.examples)
@@ -46,7 +53,7 @@ const ProblemDescriptionPanel = ({ currentProblem }) => {
 
   return (
     <div className="h-full scrollbar scrollbar-thumb-muted-foreground scrollbar-track-accent scroll overflow-y-auto text-foreground">
-      <Tabs defaultValue="description" className="w-full px-0">
+      <Tabs value={activeTab} onValueChange={(val) => dispatch(setActiveTab(val))} className="w-full px-0">
         <TabsList className="mb-4 bg-muted rounded-none h-11 w-full">
           <TabsTrigger value="description">Description</TabsTrigger>
           <TabsTrigger value="submissions">Submissions</TabsTrigger>
@@ -86,12 +93,9 @@ const ProblemDescriptionPanel = ({ currentProblem }) => {
           </Card>
         </TabsContent>
 
-        <TabsContent value="submissions">
-          <Card>
-            <CardContent className="text-sm p-4 text-muted-foreground">
-              Submissions will appear here.
-            </CardContent>
-          </Card>
+        <TabsContent value="submissions" className="">
+          
+          <Submissions/>
         </TabsContent>
 
         <TabsContent value="solutions">

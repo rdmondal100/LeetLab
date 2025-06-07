@@ -22,6 +22,7 @@ const ProblemCodeEditorPannel = ({ currentProblem, isSmallScreen }) => {
 	const [userWrittenCode, setUserWrittenCode] = useState(
 		"//Write you code here"
 	);
+	
 
 	const currentLanguageId = getLanguageId(language);
 	console.log(currentLanguageId)
@@ -29,6 +30,23 @@ const ProblemCodeEditorPannel = ({ currentProblem, isSmallScreen }) => {
 	const handleLanguageChange = (newLang) => {
 		setLanguage(newLang);
 	};
+
+useEffect(() => {
+	if (currentProblem && currentProblem.codeSnippet) {
+		const selectedLanguage = language?.toUpperCase();
+		console.log("Selected:", selectedLanguage);
+		console.log("Code Snippet:", currentProblem?.codeSnippet);
+
+		const snippet = currentProblem.codeSnippet[selectedLanguage];
+
+		if (snippet !== undefined) {
+			setUserWrittenCode(snippet);
+		} else {
+			setUserWrittenCode("// No code snippet available for " + selectedLanguage);
+		}
+	}
+}, [currentProblem?.id, language]);
+
 
 	const userInputs = currentProblem?.testcases?.map((item) => item.input);
 	const userOutputs = currentProblem?.testcases?.map((item) => item.output);

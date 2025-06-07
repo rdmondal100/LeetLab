@@ -5,7 +5,9 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
     allProblems: [],
     currentProblem: null,
-    allSolvedProblems:[]
+    allSolvedProblems:[],
+    activeTab: "description",
+
 }
 
 export const problemSlice = createSlice({
@@ -21,6 +23,9 @@ export const problemSlice = createSlice({
         setAllSolvedProblems: (state, action) => {
             state.allSolvedProblems = action.payload;
         },
+        setActiveTab:(state,action)=>{
+            state.activeTab = action.payload
+        }
     },
 })
 
@@ -28,7 +33,8 @@ export const problemSlice = createSlice({
 export const { 
     setAllProblems,
     setCurrentProblem,
-    setAllSolvedProblems
+    setAllSolvedProblems,
+    setActiveTab
 
 } = problemSlice.actions
 

@@ -5,7 +5,7 @@ console.log(process.env.RAPIDAPI_KEY)
 export const getJudge0LanguageId = (languageName) => {
     const languageMap = {
         "PYTHON": 71,
-        "C++": 10,
+        "C++": 54,
         "JAVASCRIPT": 63
     }
     return languageMap[languageName.toUpperCase()]
@@ -76,7 +76,7 @@ export const getLanguageName = (langId) => {
     const LANGUAGE_NAMES = {
         63: "JavaScript",
         71: "Python",
-        10: "C++"
+        54: "C++"
     }
 
     return LANGUAGE_NAMES[langId]

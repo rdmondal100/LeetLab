@@ -11,23 +11,23 @@ const ProblemTestCasesPanel = ({ currentProblem }) => {
   const dispatch = useDispatch();
   const [testCases, setTestCases] = useState(currentProblem?.testcases || []);
   const [activeTab, setActiveTab] = useState("0");
-const currentTestCaseResults = useSelector((state) => state.executeCode.currentTestCaseResults);
+  const currentTestCaseResults = useSelector((state) => state.executeCode.currentTestCaseResults);
 
-useEffect(() => {
-  if (currentProblem?.testcases) {
-    setTestCases(currentProblem.testcases);
-  }
-}, [currentProblem?.id]);
-  
-useEffect(() => {
-  dispatch(setCurrentProblem({ ...currentProblem, testcases: testCases }));
-}, [testCases, currentProblem?.id]);
+  useEffect(() => {
+    if (currentProblem?.testcases) {
+      setTestCases(currentProblem.testcases);
+    }
+  }, [currentProblem?.id]);
 
-useEffect(() => {
-  if (currentTestCaseResults.length > 0) {
-    setActiveView("results");
-  }
-}, [currentTestCaseResults]);
+  useEffect(() => {
+    dispatch(setCurrentProblem({ ...currentProblem, testcases: testCases }));
+  }, [testCases, currentProblem?.id]);
+
+  useEffect(() => {
+    if (currentTestCaseResults.length > 0) {
+      setActiveView("results");
+    }
+  }, [currentTestCaseResults]);
 
 
   console.log(currentProblem)
@@ -45,14 +45,14 @@ useEffect(() => {
     setActiveTab("0");
   };
 
-const updateTestCase = (index, key, value) => {
-  const updated = [...testCases];
-  updated[index] = {              
-    ...updated[index],             
-    [key]: value                 
+  const updateTestCase = (index, key, value) => {
+    const updated = [...testCases];
+    updated[index] = {
+      ...updated[index],
+      [key]: value
+    };
+    setTestCases(updated);
   };
-  setTestCases(updated);
-};
 
   return (
     <div className='flex-1 scrollbar scrollbar-thumb-muted-foreground scrollbar-track-accent overflow-y-auto pb-5 text-foreground'>
@@ -125,84 +125,95 @@ const updateTestCase = (index, key, value) => {
         </Tabs>
       )}
 
-{activeView === "results" && (
-  <Tabs value={activeTab} onValueChange={setActiveTab} className='px-4'>
-   <TabsList className='overflow-x-auto whitespace-nowrap flex items-center gap-8 bg-transparent min-h-16 py-5 h-auto flex-wrap'>
-  {currentTestCaseResults.map((result, index) => (
-    <TabsTrigger
-      className='relative w-14 hover:bg-muted border'
-      key={index}
-      value={index.toString()}
-    >
-      Case {index + 1}
-      
-      {/* Flag Icon */}
-      <span
-        className={`absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full ${
-          result.passed ? "bg-chart-2" : "bg-destructive"
-        }`}
-      ></span>
-    </TabsTrigger>
-  ))}
-</TabsList>
+      {activeView === "results" && (
+        <Tabs value={activeTab} onValueChange={setActiveTab} className='px-4'>
+          <TabsList className='overflow-x-auto whitespace-nowrap flex items-center gap-8 bg-transparent min-h-16 py-5 h-auto flex-wrap'>
+            {currentTestCaseResults?.map((result, index) => (
+              <TabsTrigger
+                className='relative w-14 hover:bg-muted border'
+                key={index}
+                value={index.toString()}
+              >
+                Case {index + 1}
+
+                {/* Flag Icon */}
+                <span
+                  className={`absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full ${result.passed ? "bg-chart-2" : "bg-destructive"
+                    }`}
+                ></span>
+              </TabsTrigger>
+            ))}
+          </TabsList>
 
 
-   {currentTestCaseResults.map((result, idx) => (
-        <TabsContent key={idx} value={idx.toString()}>
-          <div
-            className={`  p-4 space-y-3 shadow-sm transition-all duration-300`}
-          >
-            <div className="flex items-center gap-2">
-              {result.passed ? (
-                <CheckCircle className="text-chart-2" size={20} />
-              ) : (
-                <XCircle className="text-destructive" size={20} />
-              )}
-              <h4 className={`font-semibold text-lg ${result.passed ? "text-chart-2" : "text-destructive"}`}>
-                {result.passed ? "Accepted" : "Wrong Answer"}
-              </h4>
-            </div>
-
-            <div className="text-sm space-y-1">
-              <p>
-                <span className="font-medium">Runtime:</span>{" "}
-                <code className=" text-muted-foreground">{result.time || "0 ms"}</code>
-              </p>
-              <p className="font-medium">Input:</p>
-              <pre className="bg-muted p-2 rounded text-xs overflow-auto whitespace-pre-wrap">
-                  {currentProblem?.testcases?.[idx]?.input || "No Input"}
-
-              </pre>
-              <div className="flex flex-col gap-2">
-                <span className="font-medium">Output:</span>{" "}
-                <pre className={`bg-muted p-2 rounded text-xs overflow-auto whitespace-pre-wrap ${result.passed?("text-chart-2"):("text-destructive")}`}>{result.stdout || "undefined"}</pre>
-              </div>
-              <div className="flex flex-col gap-2">
-                <span className="font-medium">Expected:</span>{" "}
-                <pre  className="bg-muted text-chart-2 p-2 rounded text-xs overflow-auto whitespace-pre-wrap">{result.expected}</pre>
-              </div>
-              {result.stderr && (
-                <div className="text-destructive mt-3">
-                  <span className="font-medium">Error:</span>{" "}
-                  <code>{result.stderr}</code>
+          {
+            currentTestCaseResults?.length?
+          (currentTestCaseResults.map((result, idx) => (
+            <TabsContent key={idx} value={idx.toString()}>
+              <div
+                className={`  p-4 space-y-3 shadow-sm transition-all duration-300`}
+              >
+                <div className="flex items-center gap-2">
+                  {result.passed ? (
+                    <CheckCircle className="text-chart-2" size={20} />
+                  ) : (
+                    <XCircle className="text-destructive" size={20} />
+                  )}
+                  <h4 className={`font-semibold text-lg ${result.passed ? "text-chart-2" : "text-destructive"}`}>
+                    {result.passed ? "Accepted" : "Wrong Answer"}
+                  </h4>
                 </div>
-              )}
-              <div className={`font-bold mt-3 ${result.passed ? "text-green-600" : "text-destructive"}`}>
- {result.passed ? (
-  <span className="flex items-center gap-1">
-      Test Case Passed <CheckCircle className="text-destructive" size={20} />
-    </span>
-  ) : (
-    <span className="flex items-center gap-1">
-      Test Case Failed <XCircle className="text-destructive" size={20} />
-    </span>
-  )}              </div>
-            </div>
-          </div>
-        </TabsContent>
-      ))}
-  </Tabs>
-)}
+
+                <div className="text-sm space-y-1">
+                  <p>
+                    <span className="font-medium">Runtime:</span>{" "}
+                    <code className=" text-muted-foreground">{result.time || "0 ms"}</code>
+                  </p>
+                  <p className="font-medium">Input:</p>
+                  <pre className="bg-muted p-2 rounded text-xs overflow-auto whitespace-pre-wrap">
+                    {currentProblem?.testcases?.[idx]?.input || "No Input"}
+
+                  </pre>
+                  <div className="flex flex-col gap-2">
+                    <span className="font-medium">Output:</span>{" "}
+                    <pre className={`bg-muted p-2 rounded text-xs overflow-auto whitespace-pre-wrap ${result.passed ? ("text-chart-2") : ("text-destructive")}`}>{result.stdout || "undefined"}</pre>
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <span className="font-medium">Expected:</span>{" "}
+                    <pre className="bg-muted text-chart-2 p-2 rounded text-xs overflow-auto whitespace-pre-wrap">{result.expected}</pre>
+                  </div>
+                  {result.stderr && (
+                    <div className="text-destructive mt-3">
+                      <span className="font-medium">Error:</span>{" "}
+                      <code>{result.stderr}</code>
+                    </div>
+                  )}
+                  <div className={`font-bold mt-3 ${result.passed ? "text-chart-2" : "text-destructive"}`}>
+                    {result.passed ? (
+                      <span className="flex items-center gap-1">
+                        Test Case Passed <CheckCircle className="text-chart-2" size={20} />
+                      </span>
+                    ) : (
+                      <span className="flex items-center gap-1">
+                        Test Case Failed <XCircle className="text-destructive" size={20} />
+                      </span>
+                    )}              </div>
+                </div>
+              </div>
+            </TabsContent>
+          )))
+          :
+        (
+          <>
+          <TabsContent value="0">
+            <div className=" text-center text-muted-foreground pb-10">You have to Run or Submit the code first</div>
+          </TabsContent>
+          </>
+        )
+          
+          }
+        </Tabs>
+      )}
 
     </div>
   );

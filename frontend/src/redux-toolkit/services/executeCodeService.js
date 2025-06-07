@@ -25,9 +25,18 @@ export const executeCodeApi = createApi({
             invalidatesTags: ['ExecuteCode']
 
         }),
+         submitCurrentProblem: builder.mutation({
+            query: (currentProblemData) => ({
+                url: '/execute-code/submit-code',
+                method: "POST",
+                body: currentProblemData
+            }),
+            invalidatesTags: ['ExecuteCode']
+
+        }),
 
     }),
 })
 
 
-export const { useRunCurrentProblemMutation,  } = executeCodeApi
+export const { useRunCurrentProblemMutation,useSubmitCurrentProblemMutation  } = executeCodeApi

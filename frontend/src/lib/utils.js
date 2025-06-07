@@ -24,7 +24,7 @@ export const getLanguageId = (languageName)=>{
   const supportedLanguase =  {
       "javascript":63,
        "python":71,
-      "cpp":10
+      "cpp":54
   }
   return supportedLanguase[languageName]
 }
