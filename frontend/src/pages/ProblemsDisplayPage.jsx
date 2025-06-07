@@ -36,7 +36,10 @@ const ProblemsDisplayPage = () => {
 		isSuccess,
 	} = useGetAllProblemsQuery();
 	const allProblems = useSelector((state) => state.problem.allProblems);
-	const currentUserId = useSelector((state) => state.auth.user?._id);
+	const authUser = useSelector((state) => state.auth.authUser);
+
+
+	const currentUserId = useSelector((state) => state.auth?.authUser?.id);
 	const dispatch = useDispatch();
 
 	const [search, setSearch] = useState("");
@@ -86,7 +89,7 @@ const ProblemsDisplayPage = () => {
 
 	const filteredProblems = useMemo(() => {
 		return filteredProblemsBasic.filter((problem) => {
-			const isSolved = problem?.solvedBy?.includes(currentUserId);
+              const isSolved = problem.solvedBy?.some(item=>item?.userId===currentUserId);
 			if (solvedFilter === "SOLVED") return isSolved;
 			if (solvedFilter === "UNSOLVED") return !isSolved;
 			return true;
@@ -94,7 +97,7 @@ const ProblemsDisplayPage = () => {
 	}, [filteredProblemsBasic, solvedFilter, currentUserId]);
 
 	const solvedCount = allProblems.filter((p) =>
-		p.solvedBy?.includes(currentUserId)
+		p.solvedBy?.some(item=>item?.userId===currentUserId)
 	).length;
 
 	const totalPages = Math.ceil(filteredProblems.length / problemsPerPage);

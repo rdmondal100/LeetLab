@@ -32,7 +32,7 @@ import {
           </TableHeader>
           <TableBody>
             {problems.length? (problems.map((problem, idx) => {
-              const isSolved = problem.solvedBy?.includes(currentUserId);
+              const isSolved = problem.solvedBy?.some(item=>item?.userId===currentUserId);
               return (
                 <TableRow
                   key={problem?.id}
