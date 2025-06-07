@@ -7,7 +7,7 @@ export const sampledpData = {
   description:
     "You are climbing a staircase. It takes n steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?",
   difficulty: "EASY",
-  tags: ["Dynamic Programming", "Math", "Memoization"],
+  tags: ["Dynamic Programming", "Math", "Demo"],
   constraints: "1 <= n <= 45",
   hints:
     "To reach the nth step, you can either come from the (n-1)th step or the (n-2)th step.",
@@ -41,12 +41,16 @@ export const sampledpData = {
   ],
   codeSnippet: {
     JAVASCRIPT: `
-    /**
-* @param {number} n
-* @return {number}
-*/
 function climbStairs(n) {
-  // Your solution goes here
+  if (n <= 2) return n;
+
+  let a = 1, b = 2;
+  for (let i = 3; i <= n; i++) {
+    const temp = a + b;
+    a = b;
+    b = temp;
+  }
+  return b;
 }
 
 // Input parsing and execution
@@ -59,34 +63,30 @@ process.stdin.on('end', () => {
   }
 });
     `,
-
     PYTHON: `class Solution:
   def climbStairs(self, n: int) -> int:
-      #Your solution goes here
-
-if __name__ == "__main__":
-  import sys
-  n = int(sys.stdin.readline().strip())
-  sol = Solution()
-  print(sol.climbStairs(n))`,
+      if n <= 2:
+          return n
+      a, b = 1, 2
+      for _ in range(3, n + 1):
+          a, b = b, a + b
+      return b`,
     CPP: `#include <iostream>
 using namespace std;
 
 class Solution {
 public:
     int climbStairs(int n) {
-    //your solution goes here
+        if (n <= 2) return n;
+        int a = 1, b = 2;
+        for (int i = 3; i <= n; ++i) {
+            int temp = a + b;
+            a = b;
+            b = temp;
+        }
+        return b;
     }
-};
-
-int main() {
-    int n;
-    cin >> n;
-
-    Solution sol;
-    cout << sol.climbStairs(n) << endl;
-    return 0;
-}`,
+};`,
   },
   referenceSolution: {
     JAVASCRIPT: `
@@ -147,7 +147,7 @@ export const sampleStringProblem = {
   description:
     "A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers. Given a string s, return true if it is a palindrome, or false otherwise.",
   difficulty: "EASY",
-  tags: ["String", "Two Pointers"],
+  tags: ["String", "Two Pointers","Demo"],
   constraints:
     "1 <= s.length <= 2 * 10^5\ns consists only of printable ASCII characters.",
   hints:
@@ -181,16 +181,22 @@ export const sampleStringProblem = {
       explanation: '"yadiR" is a palindrome.',
     },
   ],
-  codeSnippet: {
+  codeSnippet:  {
     JAVASCRIPT: `/**
  * @param {string} s
  * @return {boolean}
  */
 function isPalindrome(s) {
-  // Write your code here
+  s = s.toLowerCase().replace(/[^a-z0-9]/g, '');
+  let left = 0, right = s.length - 1;
+  while (left < right) {
+    if (s[left] !== s[right]) return false;
+    left++;
+    right--;
+  }
+  return true;
 }
 
-// Add readline for dynamic input handling
 const readline = require('readline');
 const rl = readline.createInterface({
   input: process.stdin,
@@ -198,7 +204,6 @@ const rl = readline.createInterface({
   terminal: false
 });
 
-// Process input line
 rl.on('line', (line) => {
   const result = isPalindrome(line);
   console.log(result ? "true" : "false");
@@ -206,10 +211,9 @@ rl.on('line', (line) => {
 });`,
     PYTHON: `class Solution:
   def isPalindrome(self, s: str) -> bool:
-      # Write your code here
-      pass
+      filtered = [c.lower() for c in s if c.isalnum()]
+      return filtered == filtered[::-1]
 
-# Input parsing
 if __name__ == "__main__":
   import sys
   s = sys.stdin.readline().strip()
