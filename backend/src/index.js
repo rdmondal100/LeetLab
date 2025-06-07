@@ -17,9 +17,12 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.use(cors({
-  origin: process.env.CLIENT_ORIGIN,
-    credentials: true
-}))
+  origin: 'https://www.dsabattle.com',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true
+}));
+
+app.options('*', cors());
 
 app.get("/",(req,res)=>{
     res.send("Sendnig the response from backend of leetlab")
@@ -34,9 +37,10 @@ app.use("/api/v1/playlist",playlistRoutes)
 
 console.log("RAPIDAPI_KEY:", process.env.RAPIDAPI_KEY);
 
-app.listen(process.env.PORT, () => { 
-    console.log("Server is running on port 8080")
-})
 
 
 app.use(globalErrorHandler)
+
+app.listen(process.env.PORT, () => { 
+    console.log("Server is running on port 8080")
+})
