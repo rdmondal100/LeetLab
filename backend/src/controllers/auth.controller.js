@@ -48,12 +48,15 @@ export const register = asyncHandler(async (req, res) => {
     const token = jwt.sign({ id: newUser.id }, process.env.JWT_SECRET, { expiresIn: "7d" })
 
 
+    const isProduction = process.env.NODE_ENV === 'production';
+
     const options = {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: 'None',
+        secure: isProduction,
+        sameSite: isProduction ? 'None' : 'Lax',
         maxAge: 1000 * 60 * 60 * 24 * 7
-    }
+    };
+
 
     const response = new ApiResponse(201, {
         id: newUser.id,
@@ -102,13 +105,15 @@ export const login = asyncHandler(async (req, res) => {
         throw new ApiError(401, "Invalid credentials")
     }
 
+    const isProduction = process.env.NODE_ENV === 'production';
 
     const options = {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: 'None',
+        secure: isProduction,
+        sameSite: isProduction ? 'None' : 'Lax',
         maxAge: 1000 * 60 * 60 * 24 * 7
-    }
+    };
+
 
 
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "7d" })
@@ -129,11 +134,14 @@ export const login = asyncHandler(async (req, res) => {
 
 })
 export const logout = asyncHandler(async (req, res) => {
+    const isProduction = process.env.NODE_ENV === 'production';
+
     const options = {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: 'None',
-    }
+        secure: isProduction,
+        sameSite: isProduction ? 'None' : 'Lax',
+    };
+
     const response = new ApiResponse(200, null, "User logged out successfully")
     return res
         .status(response.statusCode)
