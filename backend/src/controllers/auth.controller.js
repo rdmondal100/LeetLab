@@ -50,8 +50,8 @@ export const register = asyncHandler(async (req, res) => {
 
     const options = {
         httpOnly: true,
-        sameSite: "strict",
-        secure: process.env.NODE_ENV !== "development",
+        secure: process.env.NODE_ENV === "production",
+        sameSite: 'None',
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
 
@@ -105,10 +105,11 @@ export const login = asyncHandler(async (req, res) => {
 
     const options = {
         httpOnly: true,
-        sameSite: "strict",
-        secure: process.env.NODE_ENV !== "development",
+        secure: process.env.NODE_ENV === "production",
+        sameSite: 'None',
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
+
 
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "7d" })
 
@@ -130,8 +131,8 @@ export const login = asyncHandler(async (req, res) => {
 export const logout = asyncHandler(async (req, res) => {
     const options = {
         httpOnly: true,
-        sameSite: "strict",
-        secure: process.env.NODE_ENV !== "development",
+        secure: process.env.NODE_ENV === "production",
+        sameSite: 'None',
     }
     const response = new ApiResponse(200, null, "User logged out successfully")
     return res
@@ -141,8 +142,8 @@ export const logout = asyncHandler(async (req, res) => {
 })
 
 export const check = asyncHandler(async (req, res) => {
-    if(!req.user){
-        throw new ApiError(404,"User is not found in req")
+    if (!req.user) {
+        throw new ApiError(404, "User is not found in req")
     }
     const response = new ApiResponse(200, req.user, "User authenticated Successfully")
     return res
