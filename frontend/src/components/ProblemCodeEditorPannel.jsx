@@ -13,18 +13,19 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 import { getLanguageId } from "../lib/utils.js";
 
-import { useRunCurrentProblemMutation } from "../redux-toolkit/services/executeCodeService";
+import { useDispatch } from "react-redux";
+import { setCurrentCodeRunData } from "../redux-toolkit/features/executeCodeSlice.js";
+import CodeExecutor from "./CodeExecutor.jsx";
 
-const ProblemCodeEditorPannel = ({ currentProblem }) => {
+const ProblemCodeEditorPannel = ({ currentProblem, isSmallScreen }) => {
 	const [language, setLanguage] = useState("javascript");
 	const [userWrittenCode, setUserWrittenCode] = useState(
 		"//Write you code here"
 	);
 
-	const [runCurrentProblem, { isLoading }] = useRunCurrentProblemMutation();
-
 	const currentLanguageId = getLanguageId(language);
-
+	console.log(currentLanguageId)
+	const dispatch = useDispatch()
 	const handleLanguageChange = (newLang) => {
 		setLanguage(newLang);
 	};
@@ -41,6 +42,11 @@ const ProblemCodeEditorPannel = ({ currentProblem }) => {
 		problemId: currentProblem?.id,
 	};
 	console.log(currentProblemData);
+useEffect(() => {
+  if (currentProblem?.testcases?.length) {
+    dispatch(setCurrentCodeRunData(currentProblemData));
+  }
+}, [userWrittenCode, language, currentProblem?.testcases]);
 
 	return (
 		<div className='flex-1 flex flex-col h-full'>
@@ -52,7 +58,7 @@ const ProblemCodeEditorPannel = ({ currentProblem }) => {
 				</CardHeader>
 
 				<CardContent className='p-1 pb-2 border-b-2 bg-card'>
-					<div className='flex justify-start'>
+					<div className='flex justify-between'>
 						<Select value={language} onValueChange={handleLanguageChange}>
 							<SelectTrigger className='w-auto border-none bg-card'>
 								<SelectValue placeholder='Select language' />
@@ -63,6 +69,9 @@ const ProblemCodeEditorPannel = ({ currentProblem }) => {
 								<SelectItem value='cpp'>C++</SelectItem>
 							</SelectContent>
 						</Select>
+
+								{isSmallScreen && <CodeExecutor/> }				
+
 					</div>
 				</CardContent>
 

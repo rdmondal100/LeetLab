@@ -20,10 +20,11 @@ export const getAvatarFallBackName = (fullname)=>{
 
 
 export const getLanguageId = (languageName)=>{
+  console.log(languageName)
   const supportedLanguase =  {
-      "JavaScript":63,
-       "Python":71,
-      "C++":10
+      "javascript":63,
+       "python":71,
+      "cpp":10
   }
   return supportedLanguase[languageName]
 }
