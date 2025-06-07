@@ -19,27 +19,32 @@ export const submissionApi = createApi({
 
         getAllSubmissions: builder.query({
             query: () => ({
-                url: "/submission/get-all-submissions"
+                url: "/submission/get-all-submissions",
+                credentials: 'include'
             }),
-            invalidatesTags: ['Submission']
+            providesTags: ['Submission'],
 
         }),
-       getSubmission: builder.query({
+        getSubmission: builder.query({
             query: (id) => ({
-                url: `/submission/get-submission/${id}`
+                url: `/submission/get-submission/${id}`,
+                credentials: 'include'
+
             }),
-            invalidatesTags: ['Submission']
+            providesTags: ['Submission'],
 
         }),
-         getSubmissionCount: builder.query({
+        getSubmissionCount: builder.query({
             query: (id) => ({
-                url: `/submission/get-submissions-count/${id}`
+                url: `/submission/get-submissions-count/${id}`,
+                credentials: 'include'
+
             }),
-            invalidatesTags: ['Submission']
+            providesTags: ['Submission'],
 
         }),
     }),
 })
 
 
-export const { useGetAllSubmissionsQuery,useGetSubmissionCountQuery,useGetSubmissionQuery } = submissionApi
+export const { useGetAllSubmissionsQuery, useGetSubmissionCountQuery, useGetSubmissionQuery } = submissionApi
