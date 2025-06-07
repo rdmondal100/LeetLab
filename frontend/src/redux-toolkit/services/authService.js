@@ -20,7 +20,8 @@ export const authApi = createApi({
             query: (newUser) => ({
                 url: '/auth/register',
                 method: "POST",
-                body: newUser
+                body: newUser,
+                credentials: 'include', 
             }),
             invalidatesTags: ['Auth']
 
@@ -28,16 +29,18 @@ export const authApi = createApi({
 
         getAuthUser: builder.query({
             query:()=>({
-                url: "/auth/check"
+                url: "/auth/check",
+                credentials: 'include', 
             }),
-            invalidatesTags: ['Auth']
+            providesTags: ['Auth'],
 
         }),
         loginUser: builder.mutation({
             query: (userData)=>({
                 url: '/auth/login',
                 method: "POST",
-                body: userData
+                body: userData,
+                credentials: 'include', 
             }),
             invalidatesTags: ['Auth']
 
@@ -45,7 +48,8 @@ export const authApi = createApi({
         logoutUser: builder.mutation({
             query: ()=>({
                 url: '/auth/logout',
-                method: "POST"
+                method: "POST",
+                credentials: 'include', 
             }),
             invalidatesTags: ['Auth']
 
