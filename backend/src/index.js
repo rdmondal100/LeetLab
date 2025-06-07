@@ -32,9 +32,11 @@ app.use("/api/v1/execute-code",executionRoutes)
 app.use("/api/v1/submission",submissionRoutes)
 app.use("/api/v1/playlist",playlistRoutes)
 
+console.log("RAPIDAPI_KEY:", process.env.RAPIDAPI_KEY);
 
 app.listen(process.env.PORT, () => { 
     console.log("Server is running on port 8080")
 })
+
 
 app.use(globalErrorHandler)
