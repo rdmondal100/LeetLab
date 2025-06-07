@@ -35,8 +35,6 @@ app.use("/api/v1/execute-code",executionRoutes)
 app.use("/api/v1/submission",submissionRoutes)
 app.use("/api/v1/playlist",playlistRoutes)
 
-console.log("RAPIDAPI_KEY:", process.env.RAPIDAPI_KEY);
-
 
 
 app.use(globalErrorHandler)
