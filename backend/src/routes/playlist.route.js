@@ -2,6 +2,7 @@ import express from 'express'
 import { checkAuthenticated } from '../middleware/authMiddleware.js'
 import { addProblemToPlayList, createPlayList, deletePlayList, getAllListDetails, getPlayListDetails, removeProblemFromPlayList } from '../controllers/playlist.controller.js'
 import { playListValidator, problemsIdValidator } from '../validators/index.js'
+import validateRequest from '../middleware/validateRequest.js'
 
 const playlistRoutes = express.Router()
 
