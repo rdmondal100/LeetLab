@@ -2,7 +2,7 @@ import React from 'react'
 
 const Battle = () => {
   return (
-    <div className=' w-screen h-screen text-center font-bold text-2xl'>Comming soon</div>
+    <div className=' h-screen flex justify-center items-center text-center font-bold text-2xl'>Comming soon</div>
   )
 }
 
