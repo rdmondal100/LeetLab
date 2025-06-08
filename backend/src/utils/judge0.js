@@ -1,7 +1,6 @@
 import axios from "axios"
 import { asyncHandler } from "./async-handler.js"
 import { ApiError } from "../utils/api-error.js";
-console.log(process.env.RAPIDAPI_KEY)
 export const getJudge0LanguageId = (languageName) => {
     const languageMap = {
         "PYTHON": 71,
@@ -33,7 +32,6 @@ export const submitBatch = async (submissions) => {
 
 
 const sleep = (seconds) => {
-    console.log(seconds)
     return new Promise((resolve) => setTimeout(resolve, seconds * 1000))
 }
 
@@ -80,4 +78,26 @@ export const getLanguageName = (langId) => {
     }
 
     return LANGUAGE_NAMES[langId]
+}
+
+export const parseInputString = (input)=>{
+
+  try {
+    const numsMatch = input.match(/\[.*?\]/);
+    const targetMatch = input.match(/target\s*=\s*(\d+)/);
+
+    if (!numsMatch || !targetMatch) {
+        console.log("Input is : ",input)
+      return input;
+    }
+
+    const nums = JSON.parse(numsMatch[0]);
+    const target = parseInt(targetMatch[1]);
+    console.log("INput is :",JSON.stringify({ nums, target }))
+    return JSON.stringify({ nums, target });
+
+  } catch (err) {
+    console.log("INPUt is :",input)
+    return input;
+  }
 }

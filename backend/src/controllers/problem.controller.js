@@ -3,7 +3,7 @@ import { db } from "../libs/db.js";
 import { ApiError } from "../utils/api-error.js";
 import { ApiResponse } from "../utils/api-response.js";
 import { asyncHandler } from "../utils/async-handler.js";
-import { getJudge0LanguageId, pollBatchResults, submitBatch } from "../utils/judge0.js";
+import { getJudge0LanguageId, parseInputString, pollBatchResults, submitBatch } from "../utils/judge0.js";
 
 export const createProblem = asyncHandler(async (req, res) => {
 
@@ -38,14 +38,14 @@ export const createProblem = asyncHandler(async (req, res) => {
             throw new ApiError(400, `Language ${language} is not supported!`)
         }
 
-
         //test case submissions
         const submissions = testcases.map(({ input, output }) => ({
             source_code: solutionCode,
             language_id: languageId,
-            stdin: input,
+            stdin: parseInputString(input),
             expected_output: output
         }))
+        console.log(submissions)
 
         const submissionResults = await submitBatch(submissions)
         console.log("Submission in problme controller::", submissionResults)

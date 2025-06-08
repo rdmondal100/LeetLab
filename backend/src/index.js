@@ -14,26 +14,24 @@ dotenv.config();
 
 const app = express();
 
-// app.use(cors({
-// //   origin: 'https://www.dsabattle.com',
-//   origin: 'http://localhost:5173',
-
-//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-//   credentials: true,
-// }));
-
-const allowedOrigins = ['http://localhost:5173', 'https://www.dsabattle.com'];
-
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true, 
+  origin: 'https://www.dsabattle.com',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true,
 }));
+
+// const allowedOrigins = ['http://localhost:5173', 'https://www.dsabattle.com'];
+
+// app.use(cors({
+//   origin: function (origin, callback) {
+//     if (!origin || allowedOrigins.includes(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   credentials: true, 
+// }));
 
 
 app.use(express.json());
