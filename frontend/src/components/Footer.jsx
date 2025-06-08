@@ -43,13 +43,13 @@ const Footer = () => {
         <div className="flex flex-col items-center sm:items-start gap-3">
           <h3 className="font-semibold text-foreground text-base">Follow Us</h3>
           <div className="flex gap-5 mt-1">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <a href="https://github.com/rdmondal100" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
               <Github className="w-5 h-5 hover:text-primary transition-colors" />
             </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+            <a href="https://x.com/rdmondal100" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
               <Twitter className="w-5 h-5 hover:text-primary transition-colors" />
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/in/ridaymondal100" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
               <Linkedin className="w-5 h-5 hover:text-primary transition-colors" />
             </a>
           </div>
