@@ -16,9 +16,11 @@ import { useSelector } from "react-redux";
 import { avaterPlaceholder } from "../assets";
 import LogoutButton from "./LogoutButton";
 import { getAvatarFallBackName } from "../lib/utils";
+import ThemeModeToggle from "./ThemeModeToggle";
 
 const Navbar = () => {
 	const authUser = useSelector((state) => state.auth?.authUser);
+	console.log(authUser)
     return (
 		<nav className='w-full container bg-background px-6 py-3 flex items-center justify-between '>
 			<Link
@@ -48,15 +50,11 @@ const Navbar = () => {
 
 			<div className='flex items-center gap-2'>
 				<div className='relative'>
-					<Input
-						type='text'
-						placeholder='Search...'
-						className='pl-8 w-40 md:w-64 bg-muted text-foreground placeholder:text-muted-foreground'
-					/>
-					<Search className='absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground' />
+					<ThemeModeToggle/>
 				</div>
-
-				<DropdownMenu>
+				{
+					authUser?
+					(<DropdownMenu>
 					<DropdownMenuTrigger
 						className='ring-1 ring-border overflow-hidden'
 						asChild
@@ -93,12 +91,22 @@ const Navbar = () => {
 
 						<DropdownMenuItem className='flex cursor-pointer  items-center p-0 '>
                             <LogoutButton>
-                            <LogOut />
+                            <LogOut className="text-foreground" />
 							Logout
                             </LogoutButton>
 						</DropdownMenuItem>
 					</DropdownMenuContent>
-				</DropdownMenu>
+				</DropdownMenu>)
+					:
+					(
+						<Button>
+							Register/Login
+						</Button>
+					)
+				}
+				
+
+
 			</div>
 		</nav>
 	);

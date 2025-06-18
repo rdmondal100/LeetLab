@@ -37,9 +37,10 @@ const ProblemsDisplayPage = () => {
 	} = useGetAllProblemsQuery();
 	const allProblems = useSelector((state) => state.problem.allProblems);
 	const authUser = useSelector((state) => state.auth.authUser);
-
+	console.log(authUser)
 
 	const currentUserId = useSelector((state) => state.auth?.authUser?.id);
+	console.log(currentUserId)
 	const dispatch = useDispatch();
 
 	const [search, setSearch] = useState("");
@@ -139,7 +140,7 @@ const ProblemsDisplayPage = () => {
 				</p>
 			</div>
 
-			<div className='flex flex-col md:flex-row  items-center gap-4 mb-8 '>
+			<div className='flex flex-col md:flex-row max-w-5xl mx-auto   items-center gap-4 mt-10 my-8 '>
 				<Input
 					placeholder='Search by title...'
 					value={search}
@@ -184,9 +185,9 @@ const ProblemsDisplayPage = () => {
 									<Badge
 										key={tag}
 										onClick={() => toggleTag(tag)}
-										className={`cursor-pointer px-3 py-1 rounded-full text-sm ${
+										className={`cursor-pointer px-3 py-1 text-muted-foreground rounded-full text-sm ${
 											selected
-												? "bg-primary text-primary-foreground"
+												? "bg-primary text-foreground"
 												: "bg-muted hover:bg-muted/80"
 										}`}
 									>
@@ -215,8 +216,8 @@ const ProblemsDisplayPage = () => {
 					<ToggleGroupItem value='SOLVED'>Solved</ToggleGroupItem>
 					<ToggleGroupItem className="" value='UNSOLVED'>Unsolved</ToggleGroupItem>
 				</ToggleGroup>
-				<Badge className='bg-muted py-2.5 px-3'>
-					Solved: <span className='text-chart-2'>{solvedCount}</span>/
+				<Badge className='bg-muted py-2.5 px-3 text-foreground'>
+					Solved: <span className='text-primary'>{solvedCount}</span>/
 					{allProblems?.length}
 				</Badge>
 			</div>

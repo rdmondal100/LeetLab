@@ -1,87 +1,120 @@
 import { Route, Routes } from "react-router-dom";
-import { Button } from "./components/ui/button";
+import { Toaster } from "@/components/ui/sonner";
 import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/authPages/RegisterPage";
 import LoginPage from "./pages/authPages/LoginPage";
 import ProtectedRoute from "./components/ProtectedRoute";
-
-import { Toaster } from "@/components/ui/sonner";
 import RootLayout from "./layouts/RootLayout";
 import AdminOnlyRoute from "./components/AdminOnlyRoute";
 import AddProblemPage from "./pages/AddProblemPage";
 import ProblemsDisplayPage from "./pages/ProblemsDisplayPage";
 import SingleProblemDetailsPage from "./pages/SingleProblemDetailsPage";
+import Contests from "./pages/Contests";
+import Battle from "./pages/Battle";
+import Discuss from "./pages/Discuss";
+import { useGetAuthUserQuery } from "./redux-toolkit/services/authService";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { setAuthUser } from "./redux-toolkit/features/authSlice";
 
 const App = () => {
-	return (
-		<div className='flex flex-col items-center justify-start '>
-			<Toaster richColors position='top-center' />
 
-			<Routes>
-				{/* auth  */}
-				<Route
-					path='/login'
-					element={
-						<ProtectedRoute authentication={false}>
-							<LoginPage />
-						</ProtectedRoute>
-					}
-				/>
+	  const {
+		data: authUser,
+		isFetching,
+		isLoading,
+	  } = useGetAuthUserQuery();
+	  const dispatch = useDispatch()
 
-				<Route
-					path='/register'
-					element={
-						<ProtectedRoute authentication={false}>
-							<RegisterPage />
-						</ProtectedRoute>
-					}
-				/>
+	  useEffect(()=>{
+		dispatch(setAuthUser(authUser?.data))
+	  },[authUser])
 
-				{/* protected routes  */}
-				<Route path='/' element={<RootLayout />}>
-					<Route
-						index
-						element={
-							<ProtectedRoute authentication={true}>
-								<HomePage />
-							</ProtectedRoute>
-						}
-					/>
-					<Route
-					path="/problems"
-					element={
-						<ProtectedRoute authentication={true}>
-							<ProblemsDisplayPage/>
-						</ProtectedRoute>
-					}
-					/>
+  return (
+    <div className='flex flex-col items-center justify-start relative overflow-hidden'>
+		    {/* glow  */}
+	        <div
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  transition={{ duration: 2 }}
+  className='absolute -top-32 -left-32 w-[400px] h-[400px] bg-primary/20 dark:bg-primary/15 rounded-full blur-[160px] z-10 pointer-events-none dark:mix-blend-screen'
+/>
 
-					{/* Admin routes */}
-					<Route element={<AdminOnlyRoute />}>
-						<Route
-							path='/add-problem'
-							element={
-								<ProtectedRoute authentication={true}>
-									<AddProblemPage />
-								</ProtectedRoute>
-							}
-						/>
-					</Route>
-				</Route>
+<div
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  transition={{ duration: 2, delay: 0.3 }}
+  className='absolute -top-32 -right-32 w-[400px] h-[400px] bg-primary/20 dark:bg-primary/15 rounded-full blur-[160px] z-10 pointer-events-none dark:mix-blend-screen'
+/>
+      <Toaster richColors position='top-center' />
 
-				{/* Single problem details page */}
-				
-				<Route
-					path="/problems/:id"
-					element={
-						<ProtectedRoute authentication={true}>
-							<SingleProblemDetailsPage/>
-						</ProtectedRoute>
-					}
-					/>
-			</Routes>
-		</div>
-	);
+      <Routes>
+        {/* Public HomePage route */}
+        <Route path='/' element={<RootLayout />}>
+          <Route index element={<HomePage />} />
+
+          {/* Protected routes */}
+          <Route
+            path='/problems'
+            element={
+              <ProtectedRoute>
+                <ProblemsDisplayPage />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path='/contests'
+            element={
+              <ProtectedRoute>
+                <Contests />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path='/battle'
+            element={
+              <ProtectedRoute>
+                <Battle />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path='/discuss'
+            element={
+              <ProtectedRoute>
+                <Discuss />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Admin routes */}
+          <Route element={<AdminOnlyRoute />}>
+            <Route
+              path='/add-problem'
+              element={
+                <ProtectedRoute>
+                  <AddProblemPage />
+                </ProtectedRoute>
+              }
+            />
+          </Route>
+        </Route>
+
+        {/* Single problem route */}
+        <Route
+          path='/problems/:id'
+          element={
+            <ProtectedRoute>
+              <SingleProblemDetailsPage />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </div>
+  );
 };
 
 export default App;

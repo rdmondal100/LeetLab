@@ -24,7 +24,7 @@ const LogoutButton = ({children}) => {
                 toast.success("Logout successfully")
                 console.log(authUser)
                 setTimeout(() => {
-                    navigate('/login');
+                    navigate('/');
                 }, 100);
             }
 
