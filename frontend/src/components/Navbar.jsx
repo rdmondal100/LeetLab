@@ -25,12 +25,12 @@ const Navbar = () => {
 		<nav className='w-full container bg-background px-6 py-3 flex items-center justify-between '>
 			<Link
 				to='/'
-				className='text-2xl font-extrabold tracking-tight text-primary flex items-center gap-1'
+				className='text-2xl border h-10 bg-primary/20   shadow-sm rounded-md pr-2 font-extrabold tracking-tight text-primary flex items-center justify-center gap-1'
 			>
-				<span className='bg-primary text-foreground px-2 py-0.5 rounded-md shadow-sm'>
+				<span className='bg-primary h-full  text-white flex justify-center items-center  px-2  rounded-l-md'>
 					DSA
 				</span>
-				<span className='text-muted-foreground'>Battle</span>
+				<span className='text-foreground'>Battle</span>
 			</Link>
 
 			<div className='hidden lg:flex gap-4 text-sm font-medium text-muted-foreground'>

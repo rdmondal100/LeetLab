@@ -55,7 +55,7 @@ const ProblemTestCasesPanel = ({ currentProblem }) => {
   };
 
   return (
-    <div className='flex-1 scrollbar scrollbar-thumb-muted-foreground scrollbar-track-accent overflow-y-auto pb-5 text-foreground'>
+    <div className='flex-1 scrollbar scrollbar-thumb-muted-foreground scrollbar-track-muted scroll overflow-y-auto pb-5 text-foreground'>
       <Tabs
         value={activeView}
         onValueChange={setActiveView}
@@ -76,7 +76,7 @@ const ProblemTestCasesPanel = ({ currentProblem }) => {
           <TabsList className='overflow-x-auto whitespace-nowrap flex items-center gap-8 bg-transparent min-h-16 py-5 h-auto flex-wrap'>
             {testCases.map((_, index) => (
               <div className='relative' key={index}>
-                <TabsTrigger className='w-14 hover:bg-muted border' value={index.toString()}>
+                <TabsTrigger className='w-14 bg-muted border border-border' value={index.toString()}>
                   Case {index + 1}
                 </TabsTrigger>
                 {index !== 0 && (
@@ -93,7 +93,7 @@ const ProblemTestCasesPanel = ({ currentProblem }) => {
               </div>
             ))}
             <div
-              className='w-8 h-8 cursor-pointer p-2 hover:bg-muted rounded-full flex justify-center items-center'
+              className='w-8 h-8 cursor-pointer p-2 bg-muted rounded-full flex justify-center items-center'
               onClick={addTestCase}
             >
               <Plus className='scale-125' />
@@ -106,7 +106,7 @@ const ProblemTestCasesPanel = ({ currentProblem }) => {
                 <div>
                   <Label className='text-sm font-medium'>Input:</Label>
                   <Textarea
-                    className='w-full rounded border p-2'
+                    className='w-full rounded border p-2 bg-muted'
                     value={tc.input}
                     onChange={(e) => updateTestCase(index, "input", e.target.value)}
                   />
@@ -114,7 +114,7 @@ const ProblemTestCasesPanel = ({ currentProblem }) => {
                 <div>
                   <Label className='text-sm font-medium'>Expected Output:</Label>
                   <Textarea
-                    className='w-full rounded border p-2'
+                    className='w-full rounded border p-2 bg-muted'
                     value={tc.output}
                     onChange={(e) => updateTestCase(index, "output", e.target.value)}
                   />

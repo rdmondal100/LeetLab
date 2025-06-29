@@ -1,4 +1,4 @@
-import React from "react";
+
 import Editor from "@monaco-editor/react";
 import { useTheme } from "./theme-provider";
 
@@ -7,12 +7,13 @@ const CodeEditor = ({
   onChange,
   language = "javascript",
   height = "300px",
+  className,
   ...options
 }) => {
   const { theme: currentTheme = "dark" } = useTheme();
 
   return (
-    <div className="w-full max-w-full overflow-hidden">
+    <div className="w-full max-w-full h-full overflow-hidden">
       <Editor
         width="100%"
         height={height}
@@ -20,6 +21,7 @@ const CodeEditor = ({
         theme={`vs-${currentTheme}`}
         value={value}
         onChange={onChange}
+        className={className}
         options={{
           minimap: { enabled: false },
           fontSize: 14,

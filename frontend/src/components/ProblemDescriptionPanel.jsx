@@ -17,14 +17,14 @@ const ProblemDescriptionPanel = ({ currentProblem }) => {
       <div key={idx}>
         <p className="font-semibold py-2">Example - {idx}:</p>
         <div className=" flex flex-col gap-2 ">
-			<pre className='bg-muted p-3 rounded text-xs whitespace-pre-wrap'>
+			<pre className='bg-muted border border-border p-3 rounded text-xs whitespace-pre-wrap'>
 			Input: {example.input}{"\n"}
 
 			</pre>
-			<pre className='bg-muted p-3 rounded text-xs whitespace-pre-wrap'>
+			<pre className='bg-muted p-3 border border-border rounded text-xs whitespace-pre-wrap'>
           Output: {example.output}
 		  </pre>
-		  <pre className='bg-muted p-3 rounded text-xs whitespace-pre-wrap'>
+		  <pre className='bg-muted border border-border p-3 rounded text-xs whitespace-pre-wrap'>
 
           {example.explanation ? `\nExplanation: ${example.explanation}` : ""}
 		  </pre>
@@ -52,8 +52,8 @@ const ProblemDescriptionPanel = ({ currentProblem }) => {
   };
 
   return (
-    <div className="h-full scrollbar scrollbar-thumb-muted-foreground scrollbar-track-accent scroll overflow-y-auto text-foreground">
-      <Tabs value={activeTab} onValueChange={(val) => dispatch(setActiveTab(val))} className="w-full px-0">
+    <div className="h-full scrollbar scrollbar-thumb-muted-foreground scrollbar-track-muted scroll overflow-y-auto text-foreground">
+      <Tabs value={activeTab} onValueChange={(val) => dispatch(setActiveTab(val))} className="w-full  px-0">
         <TabsList className="mb-4 bg-muted rounded-none h-11 w-full">
           <TabsTrigger value="description">Description</TabsTrigger>
           <TabsTrigger value="submissions">Submissions</TabsTrigger>

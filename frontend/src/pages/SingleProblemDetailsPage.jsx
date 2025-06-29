@@ -124,7 +124,7 @@ export default function SingleProblemDetailsPage() {
 					<div className=' flex flex-col flex-1'>
 						<div className='flex flex-col h-full'>
 							<div className='border-2 rounded-lg bg-card m-1 flex flex-col'>
-								<div className='min-h-[400px]'>
+								<div className=' '>
 									<ProblemCodeEditorPannel isSmallScreen={isSmallScreen} currentProblem={currentProblem} />
 								</div>
 								<div className=''>

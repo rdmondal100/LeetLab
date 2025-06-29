@@ -16,6 +16,7 @@ import { getLanguageId } from "../lib/utils.js";
 import { useDispatch } from "react-redux";
 import { setCurrentCodeRunData } from "../redux-toolkit/features/executeCodeSlice.js";
 import CodeExecutor from "./CodeExecutor.jsx";
+import CodeEditor  from "./CodeEditor.jsx";
 
 const ProblemCodeEditorPannel = ({ currentProblem, isSmallScreen }) => {
 	const [language, setLanguage] = useState("javascript");
@@ -94,12 +95,19 @@ useEffect(() => {
 				</CardContent>
 
 				<div className='flex-1 overflow-hidden'>
-					<Editor
+					{/* <Editor
 						height='100%'
 						language={language}
 						theme='vs-dark'
 						className='bg-muted min-h-[300px]'
 						value={userWrittenCode}
+						onChange={(value) => setUserWrittenCode(value || "")}
+					/> */}
+					<CodeEditor 
+						height='auto'
+						language={language}
+						value={userWrittenCode}
+						className='bg-muted min-h-[70vh] '
 						onChange={(value) => setUserWrittenCode(value || "")}
 					/>
 				</div>

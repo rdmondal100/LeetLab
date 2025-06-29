@@ -9,13 +9,15 @@ const Footer = () => {
 
         {/* Brand Section */}
         <div className="flex flex-col items-center md:items-start gap-3">
-          <Link
-            to="/"
-            className="text-2xl font-extrabold tracking-tight text-primary flex items-center gap-2"
-          >
-            <span className="bg-primary text-foreground px-2 py-0.5 rounded-md shadow-sm">DSA</span>
-            <span className="text-muted-foreground">Battle</span>
-          </Link>
+           <Link
+				to='/'
+				className='text-2xl border h-10 bg-primary/20   shadow-sm rounded-md pr-2 font-extrabold tracking-tight text-primary flex items-center justify-center gap-1'
+			>
+				<span className='bg-primary h-full  text-white flex justify-center items-center  px-2  rounded-l-md'>
+					DSA
+				</span>
+				<span className='text-foreground'>Battle</span>
+			</Link>
           <p className="text-sm leading-relaxed max-w-sm">
             Sharpen your DSA skills with quality problems, live battles, and a competitive leaderboard.
           </p>

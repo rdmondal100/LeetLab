@@ -32,20 +32,6 @@ const App = () => {
 
   return (
     <div className='flex flex-col items-center justify-start relative overflow-hidden'>
-		    {/* glow  */}
-	        <div
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
-  transition={{ duration: 2 }}
-  className='absolute -top-32 -left-32 w-[400px] h-[400px] bg-primary/20 dark:bg-primary/15 rounded-full blur-[160px] z-10 pointer-events-none dark:mix-blend-screen'
-/>
-
-<div
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
-  transition={{ duration: 2, delay: 0.3 }}
-  className='absolute -top-32 -right-32 w-[400px] h-[400px] bg-primary/20 dark:bg-primary/15 rounded-full blur-[160px] z-10 pointer-events-none dark:mix-blend-screen'
-/>
       <Toaster richColors position='top-center' />
 
       <Routes>
