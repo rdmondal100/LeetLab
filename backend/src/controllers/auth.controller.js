@@ -25,6 +25,7 @@ export const register = asyncHandler(async (req, res) => {
     }
 
     const { email, password, name } = req.body;
+    
     const existingUser = await db.user.findUnique({
         where: {
             email

@@ -9,6 +9,7 @@ import problemRoutes from './routes/problem.route.js';
 import executionRoutes from './routes/executeCode.route.js';
 import submissionRoutes from './routes/submission.route.js';
 import playlistRoutes from './routes/playlist.route.js';
+import profileRoutes from './routes/profile.route.js';
 
 dotenv.config();
 
@@ -45,10 +46,10 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/problems", problemRoutes);
 app.use("/api/v1/execute-code", executionRoutes);
 app.use("/api/v1/submission", submissionRoutes);
-app.use("/api/v1/playlist", playlistRoutes);
+app.use("/api/v1/profile", profileRoutes);
 
 app.use(globalErrorHandler);
 
 app.listen(process.env.PORT || 8080, () => {
-  console.log("Server is running on port 8080");
+  console.log(`http://localhost:${process.env.PORT}`);
 });

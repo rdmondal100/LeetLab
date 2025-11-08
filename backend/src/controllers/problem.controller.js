@@ -103,7 +103,7 @@ export const getAllProblems = asyncHandler(async (req, res) => {
             }
         }
     })
-    console.log("Got all problems", problems)
+    // console.log("Got all problems", problems)
     if (!problems) {
         throw new ApiError(404, "No problem found")
     }

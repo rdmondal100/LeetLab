@@ -1,350 +1,301 @@
 
 
 
-export const sampledpData = {
-  title: "Climbing Stairs",
-  category: "dp", // Dynamic Programming
-  description:
-    "You are climbing a staircase. It takes n steps to reach the top. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?",
+export const sampledpData =   {
+  title: "Merge Two Sorted Arrays",
+  description: "Given two sorted arrays, return a merged sorted array containing all elements.",
   difficulty: "EASY",
-  tags: ["Dynamic Programming", "Math", "Demo"],
-  constraints: "1 <= n <= 45",
-  hints:
-    "To reach the nth step, you can either come from the (n-1)th step or the (n-2)th step.",
-  editorial:
-    "This is a classic dynamic programming problem. The number of ways to reach the nth step is the sum of the number of ways to reach the (n-1)th step and the (n-2)th step, forming a Fibonacci-like sequence.",
-  testcases: [
-    { input: "1", output: "1" },
-    { input: "2", output: "2" },
-    { input: "3", output: "3" },
-    { input: "4", output: "5" },
-  ],
+  tags: ["Array", "Two Pointers"],
   examples: [
- {
-      input: "n = 2",
-      output: "2",
-      explanation:
-        "There are two ways to climb to the top:\n1. 1 step + 1 step\n2. 2 steps",
-    },
-{
-      input: "n = 3",
-      output: "3",
-      explanation:
-        "There are three ways to climb to the top:\n1. 1 step + 1 step + 1 step\n2. 1 step + 2 steps\n3. 2 steps + 1 step",
-    },
-{
-      input: "n = 4",
-      output: "5",
-      explanation:
-        "There are five ways to climb to the top:\n1. 1 step + 1 step + 1 step + 1 step\n2. 1 step + 1 step + 2 steps\n3. 1 step + 2 steps + 1 step\n4. 2 steps + 1 step + 1 step\n5. 2 steps + 2 steps",
-    },
+    { input: "3\n1 3 5\n4\n2 4 6 7", output: "1 2 3 4 5 6 7", explanation: "Merged and sorted." }
+  ],
+  constraints: "0 <= n,m <= 10^5",
+  hints: "Use two pointers and merge in O(n+m).",
+  editorial: "Standard merge step as in merge sort, move smaller pointer and append.",
+  testcases: [
+    { input: "3\n1 3 5\n4\n2 4 6 7", output: "1 2 3 4 5 6 7" },
+    { input: "0\n\n3\n1 2 3", output: "1 2 3" }
   ],
   codeSnippet: {
     JAVASCRIPT: `
-function climbStairs(n) {
-  if (n <= 2) return n;
-
-  let a = 1, b = 2;
-  for (let i = 3; i <= n; i++) {
-    const temp = a + b;
-    a = b;
-    b = temp;
-  }
-  return b;
+function mergeSorted(a, b) {
+  // your solution goes here
 }
 
-// Input parsing and execution
-let input = '';
-process.stdin.on('data', chunk => input += chunk);
-process.stdin.on('end', () => {
-  const n = parseInt(input.trim());
-  if (!isNaN(n)) {
-    console.log(climbStairs(n));
-  }
+process.stdin.resume();
+process.stdin.setEncoding("utf-8");
+let inputData = "";
+process.stdin.on("data", chunk => inputData += chunk);
+process.stdin.on("end", () => {
+  const lines = inputData.trim().split("\\n");
+  const n = parseInt(lines[0] || "0",10);
+  const a = n ? lines[1].split(" ").map(Number) : [];
+  const offset = n ? 2 : 1;
+  const m = parseInt(lines[offset],10);
+  const b = m ? lines[offset+1].split(" ").map(Number) : [];
+  console.log(mergeSorted(a,b).join(" "));
 });
     `,
-    PYTHON: `class Solution:
-  def climbStairs(self, n: int) -> int:
-      if n <= 2:
-          return n
-      a, b = 1, 2
-      for _ in range(3, n + 1):
-          a, b = b, a + b
-      return b`,
-    CPP: `#include <iostream>
-using namespace std;
+    PYTHON: `
+class Solution:
+    def mergeSorted(self, a, b):
+        # your solution goes here
+        pass
 
-class Solution {
-public:
-    int climbStairs(int n) {
-        if (n <= 2) return n;
-        int a = 1, b = 2;
-        for (int i = 3; i <= n; ++i) {
-            int temp = a + b;
-            a = b;
-            b = temp;
-        }
-        return b;
-    }
-};`,
+if __name__ == "__main__":
+    import sys
+    data = sys.stdin.read().strip().splitlines()
+    idx = 0
+    n = int(data[idx]); idx+=1
+    a = list(map(int, data[idx].split())) if n>0 else []; idx += 1 if n>0 else 0
+    m = int(data[idx]); idx +=1
+    b = list(map(int, data[idx].split())) if m>0 else []
+    print(" ".join(map(str, Solution().mergeSorted(a,b))))
+    `,
+    CPP: `
+#include <bits/stdc++.h>
+using namespace std;
+vector<long long> mergeSorted(vector<long long>& a, vector<long long>& b) {
+    // your solution goes here
+    return {};
+}
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int n; if (!(cin >> n)) return 0;
+    vector<long long> a(n);
+    for (int i=0;i<n;i++) cin >> a[i];
+    int m; cin >> m;
+    vector<long long> b(m);
+    for (int i=0;i<m;i++) cin >> b[i];
+    auto res = mergeSorted(a,b);
+    for (auto &x : res) cout << x << " ";
+    return 0;
+}
+    `
   },
   referenceSolution: {
     JAVASCRIPT: `
-function climbStairs(n) {
-  if (n <= 2) return n;
-
-  let a = 1, b = 2;
-  for (let i = 3; i <= n; i++) {
-    const temp = a + b;
-    a = b;
-    b = temp;
+function mergeSorted(a, b) {
+  const res = [];
+  let i = 0, j = 0;
+  while (i < a.length && j < b.length) {
+    if (a[i] <= b[j]) res.push(a[i++]);
+    else res.push(b[j++]);
   }
-  return b;
+  while (i < a.length) res.push(a[i++]);
+  while (j < b.length) res.push(b[j++]);
+  return res;
 }
 
-// Input parsing and execution
-let input = '';
-process.stdin.on('data', chunk => input += chunk);
-process.stdin.on('end', () => {
-  const n = parseInt(input.trim());
-  if (!isNaN(n)) {
-    console.log(climbStairs(n));
-  }
+process.stdin.resume();
+process.stdin.setEncoding("utf-8");
+let inputData = "";
+process.stdin.on("data", chunk => inputData += chunk);
+process.stdin.on("end", () => {
+  const lines = inputData.trim().split("\\n");
+  const n = parseInt(lines[0] || "0",10);
+  const a = n ? lines[1].split(" ").map(Number) : [];
+  const offset = n ? 2 : 1;
+  const m = parseInt(lines[offset],10);
+  const b = m ? lines[offset+1].split(" ").map(Number) : [];
+  console.log(mergeSorted(a,b).join(" "));
 });
     `,
-    PYTHON: `class Solution:
-  def climbStairs(self, n: int) -> int:
-      if n <= 2:
-          return n
-      a, b = 1, 2
-      for _ in range(3, n + 1):
-          a, b = b, a + b
-      return b`,
-    CPP: `#include <iostream>
+    PYTHON: `
+class Solution:
+    def mergeSorted(self, a, b):
+        i, j = 0, 0
+        res = []
+        while i < len(a) and j < len(b):
+            if a[i] <= b[j]:
+                res.append(a[i]); i+=1
+            else:
+                res.append(b[j]); j+=1
+        res.extend(a[i:]); res.extend(b[j:])
+        return res
+
+if __name__ == "__main__":
+    import sys
+    data = sys.stdin.read().strip().splitlines()
+    idx = 0
+    n = int(data[idx]); idx+=1
+    a = list(map(int, data[idx].split())) if n>0 else []; idx += 1 if n>0 else 0
+    m = int(data[idx]); idx +=1
+    b = list(map(int, data[idx].split())) if m>0 else []
+    print(" ".join(map(str, Solution().mergeSorted(a,b))))
+    `,
+    CPP: `
+#include <bits/stdc++.h>
+using namespace std;
+vector<long long> mergeSorted(vector<long long>& a, vector<long long>& b) {
+    vector<long long> res;
+    int i=0,j=0;
+    while (i<a.size() && j<b.size()) {
+        if (a[i] <= b[j]) res.push_back(a[i++]);
+        else res.push_back(b[j++]);
+    }
+    while (i<a.size()) res.push_back(a[i++]);
+    while (j<b.size()) res.push_back(b[j++]);
+    return res;
+}
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int n; if (!(cin >> n)) return 0;
+    vector<long long> a(n);
+    for (int i=0;i<n;i++) cin >> a[i];
+    int m; cin >> m;
+    vector<long long> b(m);
+    for (int i=0;i<m;i++) cin >> b[i];
+    auto res = mergeSorted(a,b);
+    for (auto &x : res) cout << x << " ";
+    return 0;
+}
+    `
+  }
+};
+ 
+
+
+
+export const sampleStringProblem = {
+  title: "Binary Search (Exists)",
+  description: "Given a sorted array of integers and a target, return 'YES' if target exists, otherwise 'NO'.",
+  difficulty: "EASY",
+  tags: ["Binary Search", "Array"],
+  examples: [
+    { input: "5\n1 2 3 4 5\n3", output: "YES", explanation: "3 is in the array." }
+  ],
+  constraints: "1 <= n <= 10^5, -10^9 <= nums[i], target <= 10^9",
+  hints: "Binary search in O(log n).",
+  editorial: "Standard binary search to find presence of target.",
+  testcases: [
+    { input: "5\n1 2 3 4 5\n3", output: "YES" },
+    { input: "3\n1 2 4\n3", output: "NO" }
+  ],
+  codeSnippet: {
+    JAVASCRIPT: `
+function existsInSorted(nums, target) {
+  // your solution goes here
+}
+
+process.stdin.resume();
+process.stdin.setEncoding("utf-8");
+let inputData = "";
+process.stdin.on("data", chunk => inputData += chunk);
+process.stdin.on("end", () => {
+  const lines = inputData.trim().split("\\n");
+  const n = parseInt(lines[0],10);
+  const nums = lines[1].split(" ").map(Number);
+  const target = parseInt(lines[2],10);
+  console.log(existsInSorted(nums, target) ? "YES" : "NO");
+});
+    `,
+    PYTHON: `
+class Solution:
+    def existsInSorted(self, nums, target):
+        # your solution goes here
+        pass
+
+if __name__ == "__main__":
+    n = int(input())
+    nums = list(map(int, input().split()))
+    target = int(input())
+    print("YES" if Solution().existsInSorted(nums, target) else "NO")
+    `,
+    CPP: `
+#include <iostream>
+#include <vector>
 using namespace std;
 
 class Solution {
 public:
-    int climbStairs(int n) {
-        if (n <= 2) return n;
-        int a = 1, b = 2;
-        for (int i = 3; i <= n; ++i) {
-            int temp = a + b;
-            a = b;
-            b = temp;
-        }
-        return b;
+    bool existsInSorted(vector<long long>& nums, long long target) {
+        // your solution goes here
+        return false;
     }
-};`,
-  },
 };
 
-
-
-
-// export const sampleStringProblem = {
-//   title: "Valid Palindrome",
-//   description:
-//     "A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers. Given a string s, return true if it is a palindrome, or false otherwise.",
-//   difficulty: "EASY",
-//   tags: ["String", "Two Pointers","Demo"],
-//   constraints:
-//     "1 <= s.length <= 2 * 10^5\ns consists only of printable ASCII characters.",
-//   hints:
-//     "Consider using two pointers, one from the start and one from the end, moving towards the center.",
-//   editorial:
-//     "We can use two pointers approach to check if the string is a palindrome. One pointer starts from the beginning and the other from the end, moving towards each other.",
-//   testcases: [
-//     {
-//       input: "A man, a plan, a canal: Panama",
-//       output: "true",
-//     },
-//     {
-//       input: "race a car",
-//       output: "false",
-//     },
-//     {
-//       input: " ",
-//       output: "true",
-//     },
-//   ],
-//   examples: [
-//     {
-//       input: 's = "A man, a plan, a canal: Panama"',
-//       output: "true",
-//       explanation: '"amanaplanacanalpanama" is a palindrome.',
-//     },
-
-//     {
-//       input: 's = "Riday"',
-//       output: "true",
-//       explanation: '"yadiR" is a palindrome.',
-//     },
-//   ],
-//   codeSnippet:  {
-//     JAVASCRIPT: `/**
-//  * @param {string} s
-//  * @return {boolean}
-//  */
-// function isPalindrome(s) {
-//   s = s.toLowerCase().replace(/[^a-z0-9]/g, '');
-//   let left = 0, right = s.length - 1;
-//   while (left < right) {
-//     if (s[left] !== s[right]) return false;
-//     left++;
-//     right--;
-//   }
-//   return true;
-// }
-
-// const readline = require('readline');
-// const rl = readline.createInterface({
-//   input: process.stdin,
-//   output: process.stdout,
-//   terminal: false
-// });
-
-// rl.on('line', (line) => {
-//   const result = isPalindrome(line);
-//   console.log(result ? "true" : "false");
-//   rl.close();
-// });`,
-//     PYTHON: `class Solution:
-//   def isPalindrome(self, s: str) -> bool:
-//       filtered = [c.lower() for c in s if c.isalnum()]
-//       return filtered == filtered[::-1]
-
-// if __name__ == "__main__":
-//   import sys
-//   s = sys.stdin.readline().strip()
-//   sol = Solution()
-//   result = sol.isPalindrome(s)
-//   print(str(result).lower())`,
-//     CPP: `#include <iostream>
-// #include <string>
-// #include <cctype>
-// using namespace std;
-
-// bool isPalindrome(string s) {
-//     string filtered;
-//     for (char c : s) {
-//         if (isalnum(c)) filtered += tolower(c);
-//     }
-
-//     int left = 0, right = filtered.size() - 1;
-//     while (left < right) {
-//         if (filtered[left++] != filtered[right--]) return false;
-//     }
-//     return true;
-// }
-
-// int main() {
-//     string s;
-//     getline(cin, s);
-//     cout << (isPalindrome(s) ? "true" : "false") << endl;
-//     return 0;
-// }`,
-//   },
-//   referenceSolution: {
-//     JAVASCRIPT: `/**
-//  * @param {string} s
-//  * @return {boolean}
-//  */
-// function isPalindrome(s) {
-//   s = s.toLowerCase().replace(/[^a-z0-9]/g, '');
-//   let left = 0, right = s.length - 1;
-//   while (left < right) {
-//     if (s[left] !== s[right]) return false;
-//     left++;
-//     right--;
-//   }
-//   return true;
-// }
-
-// const readline = require('readline');
-// const rl = readline.createInterface({
-//   input: process.stdin,
-//   output: process.stdout,
-//   terminal: false
-// });
-
-// rl.on('line', (line) => {
-//   const result = isPalindrome(line);
-//   console.log(result ? "true" : "false");
-//   rl.close();
-// });`,
-//     PYTHON: `class Solution:
-//   def isPalindrome(self, s: str) -> bool:
-//       filtered = [c.lower() for c in s if c.isalnum()]
-//       return filtered == filtered[::-1]
-
-// if __name__ == "__main__":
-//   import sys
-//   s = sys.stdin.readline().strip()
-//   sol = Solution()
-//   result = sol.isPalindrome(s)
-//   print(str(result).lower())`,
-//     CPP: `#include <iostream>
-// #include <string>
-// #include <cctype>
-// using namespace std;
-
-// bool isPalindrome(string s) {
-//     string filtered;
-//     for (char c : s) {
-//         if (isalnum(c)) filtered += tolower(c);
-//     }
-
-//     int left = 0, right = filtered.size() - 1;
-//     while (left < right) {
-//         if (filtered[left++] != filtered[right--]) return false;
-//     }
-//     return true;
-// }
-
-// int main() {
-//     string s;
-//     getline(cin, s);
-//     cout << (isPalindrome(s) ? "true" : "false") << endl;
-//     return 0;
-// }`,
-//   },
-// };
-
-
-
-
-
-export const sampleStringProblem =  {
-  "title": "Print Elements at Even Indices",
-  "category": "Array",
-  "description": "Given an array, print all elements that are present at even indices (0, 2, 4, ...).",
-  "difficulty": "EASY",
-  "tags": ["Looping", "Indexing", "Accenture", "Mindtree"],
-  "constraints": "- 1 <= arr.length <= 10^5\n- Elements can be any integer within valid range",
-  "hints": "Use a loop incrementing index by 2 to access even indices directly.",
-  "editorial": "Iterate through the array using a for loop, incrementing the index by 2 starting from 0, and print elements at these indices.",
-  "testcases": [
-    { "input": "[10, 20, 30, 40, 50]", "output": "[10, 30, 50]" },
-    { "input": "[5, 6, 7, 8]", "output": "[5, 7]" },
-    { "input": "[1]", "output": "[1]" }
-  ],
-  "examples": [
-    {
-      "input": "[10, 20, 30, 40, 50]",
-      "output": "[10, 30, 50]",
-      "explanation": "Elements at indices 0, 2, and 4 are printed."
-    }
-  ],
-  "codeSnippet": {
-    "JAVASCRIPT": "function printEvenIndexElements(arr) {\n  const result = [];\n  for (let i = 0; i < arr.length; i += 2) {\n    result.push(arr[i]);\n  }\n  return result;\n}\n\nlet input = '';\nprocess.stdin.on('data', chunk => input += chunk);\nprocess.stdin.on('end', () => {\n  const arr = JSON.parse(input.trim());\n  const output = printEvenIndexElements(arr);\n  console.log(output);\n});",
-    "PYTHON": "def printEvenIndexElements(arr):\n  return [arr[i] for i in range(0, len(arr), 2)]\n\nimport sys\narr = eval(sys.stdin.read())\nprint(printEvenIndexElements(arr))",
-    "CPP": "#include <iostream>\n#include <vector>\nusing namespace std;\n\nvector<int> printEvenIndexElements(const vector<int>& arr) {\n  vector<int> result;\n  for (int i = 0; i < arr.size(); i += 2) {\n    result.push_back(arr[i]);\n  }\n  return result;\n}\n\nint main() {\n  string input;\n  getline(cin, input);\n  vector<int> arr;\n  int num = 0;\n  bool reading = false;\n  for (char ch : input) {\n    if (isdigit(ch)) {\n      num = num * 10 + (ch - '0');\n      reading = true;\n    } else {\n      if (reading) {\n        arr.push_back(num);\n        num = 0;\n        reading = false;\n      }\n    }\n  }\n  if (reading) arr.push_back(num);\n  vector<int> output = printEvenIndexElements(arr);\n  for (int x : output) cout << x << \" \";\n  cout << endl;\n  return 0;\n}",
+int main() {
+    int n; cin >> n;
+    vector<long long> nums(n);
+    for (int i=0;i<n;i++) cin >> nums[i];
+    long long target; cin >> target;
+    Solution sol; cout << (sol.existsInSorted(nums, target) ? "YES" : "NO");
+    return 0;
+}
+    `
   },
-  "referenceSolution": {
-    "JAVASCRIPT": "function printEvenIndexElements(arr) {\n  const result = [];\n  for (let i = 0; i < arr.length; i += 2) {\n    result.push(arr[i]);\n  }\n  return result;\n}\n\nlet input = '';\nprocess.stdin.on('data', chunk => input += chunk);\nprocess.stdin.on('end', () => {\n  const arr = JSON.parse(input.trim());\n  const output = printEvenIndexElements(arr);\n  console.log(output);\n});",
-    "PYTHON": "def printEvenIndexElements(arr):\n  return [arr[i] for i in range(0, len(arr), 2)]\n\nimport sys\narr = eval(sys.stdin.read())\nprint(printEvenIndexElements(arr))",
-    "CPP": "#include <iostream>\n#include <vector>\nusing namespace std;\n\nvector<int> printEvenIndexElements(const vector<int>& arr) {\n  vector<int> result;\n  for (int i = 0; i < arr.size(); i += 2) {\n    result.push_back(arr[i]);\n  }\n  return result;\n}\n\nint main() {\n  string input;\n  getline(cin, input);\n  vector<int> arr;\n  int num = 0;\n  bool reading = false;\n  for (char ch : input) {\n    if (isdigit(ch)) {\n      num = num * 10 + (ch - '0');\n      reading = true;\n    } else {\n      if (reading) {\n        arr.push_back(num);\n        num = 0;\n        reading = false;\n      }\n    }\n  }\n  if (reading) arr.push_back(num);\n  vector<int> output = printEvenIndexElements(arr);\n  for (int x : output) cout << x << \" \";\n  cout << endl;\n  return 0;\n}",
+  referenceSolution: {
+    JAVASCRIPT: `
+function existsInSorted(nums, target) {
+  let l = 0, r = nums.length - 1;
+  while (l <= r) {
+    const m = Math.floor((l + r) / 2);
+    if (nums[m] === target) return true;
+    if (nums[m] < target) l = m + 1;
+    else r = m - 1;
   }
+  return false;
 }
 
+process.stdin.resume();
+process.stdin.setEncoding("utf-8");
+let inputData = "";
+process.stdin.on("data", chunk => inputData += chunk);
+process.stdin.on("end", () => {
+  const lines = inputData.trim().split("\\n");
+  const n = parseInt(lines[0],10);
+  const nums = lines[1].split(" ").map(Number);
+  const target = parseInt(lines[2],10);
+  console.log(existsInSorted(nums, target) ? "YES" : "NO");
+});
+    `,
+    PYTHON: `
+class Solution:
+    def existsInSorted(self, nums, target):
+        l, r = 0, len(nums)-1
+        while l <= r:
+            m = (l + r) // 2
+            if nums[m] == target: return True
+            if nums[m] < target: l = m + 1
+            else: r = m - 1
+        return False
+
+if __name__ == "__main__":
+    n = int(input())
+    nums = list(map(int, input().split()))
+    target = int(input())
+    print("YES" if Solution().existsInSorted(nums, target) else "NO")
+    `,
+    CPP: `
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+    bool existsInSorted(vector<long long>& nums, long long target) {
+        int l = 0, r = nums.size()-1;
+        while (l <= r) {
+            int m = (l + r) / 2;
+            if (nums[m] == target) return true;
+            if (nums[m] < target) l = m + 1;
+            else r = m - 1;
+        }
+        return false;
+    }
+};
+
+int main() {
+    int n; cin >> n;
+    vector<long long> nums(n);
+    for (int i=0;i<n;i++) cin >> nums[i];
+    long long target; cin >> target;
+    Solution sol; cout << (sol.existsInSorted(nums, target) ? "YES" : "NO");
+    return 0;
+}
+    `
+  }
+};

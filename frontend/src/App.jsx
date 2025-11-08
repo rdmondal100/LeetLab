@@ -16,6 +16,8 @@ import { useGetAuthUserQuery } from "./redux-toolkit/services/authService";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { setAuthUser } from "./redux-toolkit/features/authSlice";
+import Profile from "./pages/profile/Profile";
+import AuthModel from "./pages/authPages/AuthModel";
 
 const App = () => {
 
@@ -38,6 +40,7 @@ const App = () => {
         {/* Public HomePage route */}
         <Route path='/' element={<RootLayout />}>
           <Route index element={<HomePage />} />
+          <Route path="/auth" element={<AuthModel/>} />
 
           {/* Protected routes */}
           <Route
@@ -72,6 +75,14 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <Discuss />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path='/profile'
+            element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             }
           />

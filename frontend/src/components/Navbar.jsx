@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { UserCircle, Search, Code, LogOut } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avater";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { useSelector } from "react-redux";
 import { avaterPlaceholder } from "../assets";
 import LogoutButton from "./LogoutButton";
@@ -77,8 +77,10 @@ const Navbar = () => {
 						<DropdownMenuLabel>My Account</DropdownMenuLabel>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem className='flex cursor-pointer items-center'>
+							<Link className="flex cursor-pointer items-center gap-1.5" to="/profile">
 							<UserCircle />
 							Profile
+							</Link>
 						</DropdownMenuItem>
 						{authUser?.role === "ADMIN" && (
 							<DropdownMenuItem >
@@ -99,9 +101,11 @@ const Navbar = () => {
 				</DropdownMenu>)
 					:
 					(
+						<Link to={'/auth'}>
 						<Button>
 							Register/Login
 						</Button>
+						</Link>
 					)
 				}
 				
