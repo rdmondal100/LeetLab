@@ -97,17 +97,17 @@ const UserDetails = ({ stats }) => {
             <div className="flex flex-wrap gap-3 mt-2">
               <Badge className="bg-primary/20 flex items-center gap-2 text-sm px-3 py-1">
                 <Award className="w-4 h-4 text-yellow-500" />
-                <span>Rank #{s.rank}</span>
+                <span className="text-foreground ">Rank #{s.rank}</span>
               </Badge>
 
               <Badge className="bg-primary/20 flex items-center gap-2 text-sm px-3 py-1">
                 <Flame className="w-4 h-4 text-red-500" />
-                <span>{s.streak}d streak</span>
+                <span className="text-foreground ">{s.streak}d streak</span>
               </Badge>
 
               <Badge className="bg-primary/20 flex items-center gap-2 text-sm px-3 py-1">
                 <Goal className="w-4 h-4 text-green-500" />
-                <span>{s.acceptance} success</span>
+                <span className="text-foreground ">{s.acceptance} success</span>
               </Badge>
             </div>
           </div>

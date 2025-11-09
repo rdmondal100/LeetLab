@@ -7,8 +7,8 @@ const StatCard = ({ icon: Icon, value, label, badge, hint }) => (
   <Card className="w-full">
     <CardHeader className="flex items-start justify-between gap-4">
       <div className="flex items-center gap-3">
-        <div className="p-2 rounded-2xl bg-gray-100/60">
-          <Icon className="h-6 w-6 text-chart-2" aria-hidden />
+        <div className="p-2 rounded-full bg-chart-2/10">
+          <Icon className="h-5 w-5 text-chart-2" aria-hidden />
         </div>
         <div className="flex flex-col">
           <span className="text-sm font-medium text-muted-foreground">{label}</span>

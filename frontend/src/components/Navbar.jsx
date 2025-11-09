@@ -34,7 +34,7 @@ const Navbar = () => {
 			</Link>
 
 			<div className='hidden lg:flex gap-4 text-sm font-medium text-muted-foreground'>
-				<Link  to="/problems" className='hover:text-primary'>
+				{/* <Link  to="/problems" className='hover:text-primary'>
 					Problems
 				</Link>
 				<Link  to="contests" className='hover:text-primary'>
@@ -45,7 +45,7 @@ const Navbar = () => {
 				</Link>
 				<Link  to="battle" className='hover:text-primary'>
 					Battle
-				</Link>
+				</Link> */}
 			</div>
 
 			<div className='flex items-center gap-2'>
