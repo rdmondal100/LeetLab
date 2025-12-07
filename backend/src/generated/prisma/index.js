@@ -235,11 +235,8 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-<<<<<<< HEAD
-      "value": "C:\\Users\\Riday-Mondal\\Downloads\\LeetLab-main\\LeetLab-main\\backend\\src\\generated\\prisma",
-=======
-      "value": "E:\\Coding\\Cohort\\Projects\\LeetLab\\backend\\src\\generated\\prisma",
->>>>>>> c74359d71cdcc27f09d965c1a634b5b8eb00ef07
+       "value": "C:\\Users\\Riday-Mondal\\Downloads\\LeetLab-main\\LeetLab-main\\backend\\src\\generated\\prisma",
+ 
       "fromEnvVar": null
     },
     "config": {
@@ -253,11 +250,8 @@ const config = {
       }
     ],
     "previewFeatures": [],
-<<<<<<< HEAD
-    "sourceFilePath": "C:\\Users\\Riday-Mondal\\Downloads\\LeetLab-main\\LeetLab-main\\backend\\prisma\\schema.prisma",
-=======
-    "sourceFilePath": "E:\\Coding\\Cohort\\Projects\\LeetLab\\backend\\prisma\\schema.prisma",
->>>>>>> c74359d71cdcc27f09d965c1a634b5b8eb00ef07
+     "sourceFilePath": "C:\\Users\\Riday-Mondal\\Downloads\\LeetLab-main\\LeetLab-main\\backend\\prisma\\schema.prisma",
+ 
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
