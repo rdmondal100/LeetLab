@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 // import { CheckCircle, Lock, Trash } from "lucide-react";
 // import { useNavigate } from "react-router-dom";
 // import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
@@ -202,10 +203,14 @@
 
 
 import { CheckCircle, Lock, Trash } from "lucide-react";
+=======
+import { CheckCircle, Lock } from "lucide-react";
+>>>>>>> c74359d71cdcc27f09d965c1a634b5b8eb00ef07
 import { useNavigate } from "react-router-dom";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useRef, useState, useEffect } from "react";
 import { cn } from "@/lib/utils";  
+<<<<<<< HEAD
 import { toast } from "sonner";
 import axios from "axios";
 import { BASEURL } from "../lib/constants";
@@ -216,10 +221,18 @@ const difficultyColor = {
   EASY: "bg-gradient-to-r from-emerald-500/10 to-green-500/10 text-emerald-600 dark:text-emerald-400 ring-emerald-500/20",
   MEDIUM: "bg-gradient-to-r from-amber-500/10 to-yellow-500/10 text-amber-600 dark:text-amber-400 ring-amber-500/20",
   HARD: "bg-gradient-to-r from-rose-500/10 to-red-500/10 text-rose-600 dark:text-rose-400 ring-rose-500/20",
+=======
+
+const difficultyColor = {
+  EASY: "bg-gradient-to-r from-emerald-500/10 to-green-500/10 text-emerald-600 dark:text-emerald-400  ring-emerald-500/20",
+  MEDIUM: "bg-gradient-to-r from-amber-500/10 to-yellow-500/10 text-amber-600 dark:text-amber-400  ring-amber-500/20",
+  HARD: "bg-gradient-to-r from-rose-500/10 to-red-500/10 text-rose-600 dark:text-rose-400  ring-rose-500/20",
+>>>>>>> c74359d71cdcc27f09d965c1a634b5b8eb00ef07
 };
 
 const ProblemCardList = ({ problems, currentUserId, isAdmin }) => {
   const navigate = useNavigate();
+<<<<<<< HEAD
   const dispatch = useDispatch();
   
   // Local state to manage UI instantly after delete
@@ -254,6 +267,19 @@ const ProblemCardList = ({ problems, currentUserId, isAdmin }) => {
   };
 
   if (!allProblems.length) {
+=======
+  console.log(problems)
+
+  problems.map(problem=>{
+    problem.solvedBy?.some((item)=>{
+            console.log(item)
+            console.log(currentUserId)
+          });
+  })
+
+
+  if (!problems.length) {
+>>>>>>> c74359d71cdcc27f09d965c1a634b5b8eb00ef07
     return (
       <div className="text-center py-10 text-muted-foreground">
         <p className="text-lg font-medium">No problems found ☹️</p>
@@ -263,6 +289,7 @@ const ProblemCardList = ({ problems, currentUserId, isAdmin }) => {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 container">
+<<<<<<< HEAD
       {allProblems.map((problem, index) => {
         const isSolved = problem.solvedBy?.some(item => item?.userId === currentUserId);
 
@@ -315,6 +342,46 @@ const ProblemCardList = ({ problems, currentUserId, isAdmin }) => {
             <p className="text-sm text-muted-foreground mb-2 line-clamp-2">
               {problem.description}
             </p>
+=======
+      {problems.map((problem, index) => {
+        const isSolved = problem.solvedBy?.some(item => item?.userId === currentUserId);
+         return (
+          <div
+            key={problem.id}
+            onClick={() => navigate(`/problems/${problem.id}`)}
+            className="border rounded-xl p-4 shadow-sm hover:shadow-md transition cursor-pointer bg-background group"
+          >
+            <div className="flex items-center justify-between mb-3">
+            <div className="flex justify-start gap-3 items-center ">
+              <span className="text-sm text-muted-foreground font-medium">#{index + 1}</span>
+              <span className={cn(
+                "text-xs px-2 py-1 rounded-full border font-semibold",
+                difficultyColor[problem.difficulty]
+              )}>
+                {problem.difficulty}
+              </span>
+            </div>
+
+            
+            <div className="flex items-start gap-2 text-sm">
+              {isSolved ? (
+                <span className="flex items-center text-primary font-medium gap-1">
+                  <CheckCircle size={16} /> Solved
+                </span>
+              ) : (
+                <span className="flex items-center gap-1 text-chart-3">
+                  <Lock size={16} /> Unsolved
+                </span>
+              )}
+            </div>
+            </div>
+            <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition">
+              {problem.title}
+            </h3>
+            <p className="text-sm text-muted-foreground mb-2 line-clamp-2">
+  {problem.description}
+</p>
+>>>>>>> c74359d71cdcc27f09d965c1a634b5b8eb00ef07
 
             <TagDisplay tags={problem.tags} />
           </div>
@@ -326,6 +393,11 @@ const ProblemCardList = ({ problems, currentUserId, isAdmin }) => {
 
 export default ProblemCardList;
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> c74359d71cdcc27f09d965c1a634b5b8eb00ef07
 const TagDisplay = ({ tags }) => {
   const containerRef = useRef(null);
   const [visibleTags, setVisibleTags] = useState(tags);
@@ -357,7 +429,14 @@ const TagDisplay = ({ tags }) => {
   }, [tags]);
 
   return (
+<<<<<<< HEAD
     <div ref={containerRef} className="flex gap-1 max-w-full flex-wrap">
+=======
+    <div
+      ref={containerRef}
+      className="flex gap-1 max-w-full flex-wrap"
+    >
+>>>>>>> c74359d71cdcc27f09d965c1a634b5b8eb00ef07
       {visibleTags.map((tag, idx) => (
         <span
           key={idx}

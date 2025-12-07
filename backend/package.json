@@ -12,7 +12,11 @@
   "description": "",
   "dependencies": {
     "@prisma/client": "^6.16.2",
+<<<<<<< HEAD
     "axios": "^1.13.2",
+=======
+    "axios": "^1.9.0",
+>>>>>>> c74359d71cdcc27f09d965c1a634b5b8eb00ef07
     "bcryptjs": "^3.0.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",

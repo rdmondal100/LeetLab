@@ -225,7 +225,11 @@ const ProblemsDisplayPage = () => {
 			<ProblemTable
 				problems={paginatedProblems}
 				currentUserId={currentUserId}
+<<<<<<< HEAD
 				isAdmin = {authUser?.role ==="ADMIN"}
+=======
+				isAdmin = {authUser?.role ==="Admin"}
+>>>>>>> c74359d71cdcc27f09d965c1a634b5b8eb00ef07
 			/>
 
 			{totalPages > 1 && (
