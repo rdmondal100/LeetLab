@@ -1,24 +1,11 @@
-<<<<<<< HEAD
- 
-=======
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
->>>>>>> c74359d71cdcc27f09d965c1a634b5b8eb00ef07
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
 datasource db {
-<<<<<<< HEAD
-  provider = "mysql"
-=======
   provider = "postgresql"
->>>>>>> c74359d71cdcc27f09d965c1a634b5b8eb00ef07
   url      = env("DATABASE_URL")
 }
 
