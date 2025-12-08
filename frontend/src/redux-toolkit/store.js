@@ -8,6 +8,7 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 import { problemApi } from './services/problemService'
 import { executeCodeApi } from './services/executeCodeService'
 import { submissionApi } from './services/submissionService'
+import { aiAnalyzerApi } from './services/aiAnalyzerService'
 
 
 export const store = configureStore({
@@ -17,18 +18,19 @@ export const store = configureStore({
     problem: problemReducer,
     executeCode: executeCodeReducer,
     submission: submissionReducer,
-
+  
 
     // API service reducer
     [authApi.reducerPath]: authApi.reducer,
     [problemApi.reducerPath]: problemApi.reducer,
     [executeCodeApi.reducerPath]: executeCodeApi.reducer,
         [submissionApi.reducerPath]: submissionApi.reducer,
+        [aiAnalyzerApi.reducerPath]: aiAnalyzerApi.reducer
 
   },
 
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authApi.middleware, problemApi.middleware,executeCodeApi.middleware,submissionApi.middleware),
+    getDefaultMiddleware().concat(authApi.middleware, problemApi.middleware,executeCodeApi.middleware,submissionApi.middleware,aiAnalyzerApi.middleware),
 })
 
 

@@ -10,6 +10,7 @@ import executionRoutes from './routes/executeCode.route.js';
 import submissionRoutes from './routes/submission.route.js';
 import playlistRoutes from './routes/playlist.route.js';
 import profileRoutes from './routes/profile.route.js';
+import aiAgentRouter from './routes/ai-agent.route.js';
 
 dotenv.config();
 
@@ -47,6 +48,7 @@ app.use("/api/v1/problems", problemRoutes);
 app.use("/api/v1/execute-code", executionRoutes);
 app.use("/api/v1/submission", submissionRoutes);
 app.use("/api/v1/profile", profileRoutes);
+app.use("/api/v1/ai-agent", aiAgentRouter);
 
 app.use(globalErrorHandler);
 
